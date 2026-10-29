@@ -66,6 +66,9 @@ html.redirect #redirect{display:block}
 /* Scène niet hoger dan het venster toelaat, zodat kop, scène, tekst en knoppen samen in beeld passen. */
 #demo{scroll-margin-top:8px}
 #demo .stage,#demo .demo-foot{max-width:min(100%,calc((100vh - 380px) * 16 / 9));margin-left:auto;margin-right:auto}
+#demo .ch-head{display:block;text-align:center;max-width:min(100%,calc((100vh - 380px) * 16 / 9));margin:0 auto 26px}
+#demo .ch-head .mono{margin-bottom:10px}
+#demo .ch-sub{margin:12px auto 0}
 .stage{container-type:inline-size;border:2px solid var(--ink);background:var(--ink)}
 .stage .chrome{display:flex;align-items:center;justify-content:space-between;padding:8px 14px;color:#d9d3c6;font:600 12px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;border-bottom:1px solid #3a3a3a}
 .scene{position:relative;aspect-ratio:16/9;font-size:1.35cqw;color:#1c2733;overflow:hidden;background:#0e1420}
@@ -199,6 +202,10 @@ code{font:.88em var(--mono);background:#ebe4d4;padding:2px 5px;border-radius:3px
 /* slot */
 .end{padding:60px 0 70px}
 .end h2{font:400 clamp(32px,4.6vw,60px)/1.05 var(--serif);letter-spacing:-.025em;margin:0 0 24px;max-width:14em;text-wrap:balance}
+.tip{margin-top:38px;padding-top:26px;border-top:1px solid #cfc8ba}
+.tip-row{display:flex;flex-wrap:wrap;gap:12px;margin-top:14px}
+.tip-row .btn img{width:22px;height:22px}
+.tip-note{margin:12px 0 0;color:var(--ink-2);font-size:14px}
 footer{border-top:1.5px solid var(--rule);padding:22px 0 50px;display:flex;flex-wrap:wrap;gap:18px 30px;justify-content:space-between;color:var(--ink-2);font-size:14px}
 footer a{color:inherit}
 @media(max-width:860px){
@@ -393,8 +400,17 @@ footer a{color:inherit}
   <h2>Installeer het op twee Macs en stuur de eerste link.</h2>
   <div class="actions">
     <a class="btn" href="https://github.com/gerbenhoogendam/sharelink-finder/releases">Download voor macOS →</a>
-    <a class="btn line" id="tip" href="mailto:?subject=Links%20naar%20bestanden%20delen%20kan%20%C3%A9indelijk%20klikbaar%20naar%20de%20Finder!">Mail dit naar een collega ✉︎</a>
     <a class="btn line" href="https://github.com/gerbenhoogendam/sharelink-finder">Broncode op GitHub</a>
+  </div>
+  <div class="tip">
+    <div class="mono">Tip een collega · wij gebruiken:</div>
+    <div class="tip-row">
+      <a class="btn line" data-tip="Dropbox" href="#"><img src="img/dropbox.png" alt="">Dropbox</a>
+      <a class="btn line" data-tip="Google Drive" href="#"><img src="img/gdrive.png" alt="">Google Drive</a>
+      <a class="btn line" data-tip="Synology Drive" href="#"><img src="img/synology.png" alt="">Synology Drive</a>
+      <a class="btn line" data-tip="fileserver" href="#"><img src="img/fileserver.png" alt="">een Fileserver</a>
+    </div>
+    <p class="tip-note">Opent je mailprogramma met onderwerp en tekst alvast ingevuld, zonder ontvanger. Aanpassen kan nog voor je verstuurt.</p>
   </div>
 </section>
 
@@ -404,18 +420,19 @@ footer a{color:inherit}
 </footer></div>
 
 <script>
-// Tip-knop: opent de standaard mailclient zonder ontvanger, met onderwerp en een korte tekst die de verzender nog kan aanpassen.
+// Tip-knoppen: openen het mailprogramma zonder ontvanger, met onderwerp en tekst; alleen de bron verschilt per knop.
 (() => {
   const subject = 'Links naar bestanden delen kan éindelijk klikbaar naar de Finder!';
-  const body = [
-    'Hoi,', '',
-    'Ken je dit: je mailt iemand waar een bestand in Dropbox staat, en die gaat zoeken en bladeren.',
-    'Met Sharelink - Finder stuur je een link die bij de ander precies dat bestand opent, in hun eigen Dropbox, Google Drive, Synology Drive of op de server.',
-    'Gratis, open source, en er gaat niets naar buiten.', '',
-    'Kijk op https://share-link.nl', '',
-    'Groet,'
-  ].join('\r\n');
-  document.getElementById('tip').href = 'mailto:?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+  document.querySelectorAll('[data-tip]').forEach(a => {
+    const name = a.dataset.tip, source = name === 'fileserver' ? 'van de fileserver' : 'uit ' + name;
+    const body = [
+      'Wow! Eindelijk!', '',
+      'Met Sharelink kunnen we éindelijk een link delen ' + source + ', die openen in de Finder in plaats van de browser. Je kunt een link naar de bovenliggende map, of direct naar het bestand sturen. De link kun je gewoon in chat, mail, maar ook in documenten plakken.', '',
+      'Gratis, open source.',
+      'Kijk op https://share-link.nl'
+    ].join('\r\n');
+    a.href = 'mailto:?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+  });
 })();
 (() => {
   const $ = id => document.getElementById(id);
