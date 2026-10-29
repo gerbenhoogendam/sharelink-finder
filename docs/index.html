@@ -201,12 +201,6 @@ html.redirect #redirect{display:block}
 code{font:.88em var(--mono);background:#ebe4d4;padding:2px 5px;border-radius:3px;word-break:break-all}
 /* slot */
 .end{padding-top:60px;padding-bottom:70px}
-.promptbox{position:relative;border:2px solid var(--ink);background:#fffdf8;padding:22px 24px 24px}
-.promptbox pre{margin:0;white-space:pre-wrap;font:14px/1.6 var(--mono);color:var(--ink)}
-.promptbox .copy{position:absolute;top:-2px;right:-2px;border:2px solid var(--ink);background:var(--ink);color:var(--paper);font:600 14px var(--sans);padding:10px 16px;cursor:pointer}
-.promptbox .copy:hover{background:var(--blue);border-color:var(--blue)}
-.check-note{margin:18px 0 0;color:var(--ink-2);font-size:15px;max-width:48em}
-@media(max-width:860px){.promptbox{padding-top:58px}.promptbox pre{font-size:13px}}
 .end h2{font:400 clamp(32px,4.6vw,60px)/1.05 var(--serif);letter-spacing:-.025em;margin:0 0 24px;max-width:14em;text-wrap:balance}
 .tip{margin-top:38px;padding-top:26px;border-top:1px solid #cfc8ba}
 .tip-row{display:flex;flex-wrap:wrap;gap:12px;margin-top:14px}
@@ -246,7 +240,7 @@ footer a{color:inherit}
 <div class="wrap">
   <div class="top">
     <a class="brand" href="/"><img src="icon.png" alt="">Sharelink - Finder</a>
-    <nav><a href="#demo">Demo</a><a href="#privacy">Gegevens</a><a href="#werkt">Werkt met</a><a href="#check">Zelf nakijken</a><a href="https://github.com/gerbenhoogendam/sharelink-finder">GitHub</a></nav>
+    <nav><a href="#demo">Demo</a><a href="#privacy">Gegevens</a><a href="#werkt">Werkt met</a><a href="https://github.com/gerbenhoogendam/sharelink-finder">GitHub</a></nav>
   </div>
   <hr class="rule">
 
@@ -409,34 +403,6 @@ footer a{color:inherit}
 </section>
 
 <div class="wrap"><hr class="rule"></div>
-<section class="ch wrap" id="check">
-  <div class="ch-head"><div class="mono">05 — Geloof ons niet op ons woord</div>
-    <div><h2>Laat een AI het zelf nakijken.</h2>
-    <p class="ch-sub">Plak deze opdracht in ChatGPT, Claude, Gemini of welke AI je ook gebruikt. De code is openbaar, dus de AI kan hem regel voor regel lezen en je vertellen of je dit op de Macs van je medewerkers wilt.</p></div></div>
-  <div class="promptbox">
-    <button class="copy" id="copy-prompt">Kopieer de opdracht</button>
-    <pre id="prompt">Ik overweeg een macOS-app in te zetten binnen onze organisatie: Sharelink - Finder.
-Website: https://share-link.nl
-Broncode: https://github.com/gerbenhoogendam/sharelink-finder
-
-Wat de app belooft: je selecteert een bestand in Dropbox, Google Drive, Synology Drive of op een servershare en maakt er een link van die bij een collega precies dat bestand opent, in diens eigen lokale kopie. De makers stellen dat er niets wordt geüpload, niets wordt gelogd en dat er geen gegevens over onze organisatie, onze bestanden of onze medewerkers naar buiten gaan.
-
-Onderzoek dat grondig en onafhankelijk, alsof je onze security officer bent. Lees de volledige broncode in de repository (CloudLinks.swift, App.swift, docs/index.html, build.sh, install.sh, release.sh, Info.plist en Sharelink.entitlements) en beantwoord:
-
-1. Netwerkverkeer. Maakt de app zelf ooit een netwerkverbinding, en zo ja naar welke adressen? Wat staat er precies in een link, en wat bereikt de server op share-link.nl wel en niet? Leg uit wat het hekje (#) in de link doet.
-2. Gegevens. Welke informatie over bestanden, mappen, gebruikersnamen of de computer komt in een link terecht, en bij wie kan die terechtkomen?
-3. Rechten. Welke macOS-permissies en entitlements vraagt de app (Finder-automatisering, hardened runtime, sandbox) en waarvoor worden ze gebruikt? Vraagt de app iets dat meer is dan nodig?
-4. Lokaal gedrag. Wat doet de app met het bestandssysteem? Kan een link iets openen buiten onze gedeelde mappen, bijvoorbeeld via ../ of een absoluut pad? Welke bestandstypen opent de app wel en niet automatisch?
-5. Verspreiding. Is de app gesigneerd en genotariseerd, en klopt wat de releasenotes daarover zeggen met de scripts in de repository?
-6. Afhankelijkheden. Gebruikt de app externe bibliotheken, analytics, crashrapportage of een updatemechanisme dat naar buiten belt?
-7. Misbruik. Welk risico loopt een medewerker die op een kwaadaardig gemaakte sharelink-link klikt? Wat is het slechtst denkbare scenario?
-
-Geef daarna een duidelijk oordeel: kunnen wij deze app met een gerust hart op de Macs van onze medewerkers installeren? Onderbouw elk punt met het bestand en de regel waar je het in de code hebt gezien, zeg expliciet wat je niet hebt kunnen controleren, en noem de voorwaarden of aanpassingen die je zou aanraden voordat we uitrollen.</pre>
-  </div>
-  <p class="check-note">Een goed antwoord noemt per punt het bestand waarin het staat, zegt wat de AI níét kon controleren, en eindigt met een oordeel plus voorwaarden. Krijg je alleen geruststellende woorden zonder verwijzingen naar de code, vraag dan door.</p>
-</section>
-
-<div class="wrap"><hr class="rule"></div>
 <section class="end wrap">
   <h2>Installeer het op twee Macs en stuur de eerste link.</h2>
   <div class="actions">
@@ -466,14 +432,6 @@ Geef daarna een duidelijk oordeel: kunnen wij deze app met een gerust hart op de
 </footer></div>
 
 <script>
-// Kopieerknop voor de AI-opdracht.
-(() => {
-  const btn = document.getElementById('copy-prompt'), pre = document.getElementById('prompt');
-  const done = ok => { btn.textContent = ok ? '✓ Gekopieerd' : 'Selecteer de tekst en kopieer zelf'; setTimeout(() => btn.textContent = 'Kopieer de opdracht', 2200); };
-  // Eerst de moderne klembord-API; lukt die niet (oude browser, geen focus), dan selecteren en het oude kopieercommando.
-  const fallback = () => { const r = document.createRange(); r.selectNodeContents(pre); const sel = getSelection(); sel.removeAllRanges(); sel.addRange(r); let ok = false; try { ok = document.execCommand('copy'); } catch (e) {} done(ok); };
-  btn.onclick = () => (navigator.clipboard ? navigator.clipboard.writeText(pre.textContent).then(() => done(true), fallback) : fallback());
-})();
 // Tip-knoppen: openen het mailprogramma zonder ontvanger, met onderwerp en tekst; alleen de bron verschilt per knop.
 (() => {
   const subject = 'Links naar bestanden delen kan éindelijk klikbaar naar de Finder!';
