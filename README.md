@@ -4,7 +4,7 @@ Menubalk-app voor macOS die een link maakt naar een bestand of map in Dropbox, G
 
 *A macOS menu bar app that turns a file in Dropbox, Google Drive, Synology Drive or an SMB share into a link that opens the same file in the recipient's own local copy. UI is in Dutch.*
 
-**Download:** de nieuwste gesigneerde en genotariseerde versie staat bij [Releases](https://github.com/gerbenhoogendam/sharelink-finder/releases). Uitpakken, naar Programma's slepen, één keer starten.
+**Download:** [Sharelink-Finder.zip](https://github.com/gerbenhoogendam/sharelink-finder/releases/latest/download/Sharelink-Finder.zip), altijd de nieuwste gesigneerde en genotariseerde versie. Oudere versies staan bij [Releases](https://github.com/gerbenhoogendam/sharelink-finder/releases). Uitpakken, naar Programma's slepen, één keer starten.
 
 ## Hoe het werkt
 
