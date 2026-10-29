@@ -23,8 +23,8 @@ enum Provider: String, CaseIterable {
         let source: NSImage
         if let app = apps[self], FileManager.default.fileExists(atPath: app) {
             source = NSWorkspace.shared.icon(forFile: app)
-        } else if self == .smb, let net = NSImage(named: NSImage.networkName) {
-            source = net
+        } else if self == .smb, let server = Bundle.main.image(forResource: "fileserver") ?? NSImage(named: NSImage.networkName) {
+            source = server   // Xserve-icoon uit Resources; de netwerkbol van macOS als terugval
         } else {
             source = NSWorkspace.shared.icon(for: .folder)
         }
