@@ -45,7 +45,10 @@ enum Provider: String, CaseIterable {
 
 enum CloudLinks {
     // Standaard de redirectpagina op share-link.nl (GitHub Pages); eigen domein zonder opnieuw bouwen: defaults write nl.itgsolutions.sharelink LinkBase 'https://open.jouwdomein.nl/#'
-    static var base: String { UserDefaults.standard.string(forKey: "LinkBase") ?? "https://share-link.nl/#" }
+    static var base: String {
+        let b = UserDefaults.standard.string(forKey: "LinkBase") ?? "https://share-link.nl/#"
+        return b.hasSuffix("#") ? b : b + "#"   // zonder hekje zou het pad wél naar de server gaan
+    }
     static let fm = FileManager.default
 
     static var home: URL {
@@ -105,16 +108,29 @@ enum CloudLinks {
         return (map[h.lowercased()] ?? h).lowercased()
     }
 
-    static func mountedVolume(host: String, share: String) -> URL? {
+    static func mountedSMB() -> [SMBInfo] {
         let vols = fm.mountedVolumeURLs(includingResourceValuesForKeys: [.volumeURLForRemountingKey],
                                         options: [.skipHiddenVolumes]) ?? []
-        var fallback: URL?
-        for v in vols {
-            guard let info = smbInfo(for: v), info.share.caseInsensitiveCompare(share) == .orderedSame else { continue }
-            if canonicalHost(info.host) == canonicalHost(host) { return info.mountPoint }
-            fallback = fallback ?? info.mountPoint
-        }
-        return fallback
+        return vols.compactMap(smbInfo(for:))
+    }
+
+    // Alleen de share op precies de server uit de link; een gelijknamige share op een andere server telt niet.
+    static func mountedVolume(host: String, share: String) -> URL? {
+        mountedSMB().first { $0.share.caseInsensitiveCompare(share) == .orderedSame && canonicalHost($0.host) == canonicalHost(host) }?.mountPoint
+    }
+
+    // Bekend: in HostAliases, al eens bevestigd, of er is nu al een share van die server gemount.
+    static func isKnownHost(_ host: String) -> Bool {
+        let h = canonicalHost(host)
+        let aliases = UserDefaults.standard.dictionary(forKey: "HostAliases") as? [String: String] ?? [:]
+        if aliases.keys.contains(where: { canonicalHost($0) == h }) || aliases.values.contains(where: { canonicalHost($0) == h }) { return true }
+        if (UserDefaults.standard.stringArray(forKey: "KnownHosts") ?? []).contains(h) { return true }
+        return mountedSMB().contains { canonicalHost($0.host) == h }
+    }
+
+    static func rememberHost(_ host: String) {
+        var known = UserDefaults.standard.stringArray(forKey: "KnownHosts") ?? []
+        if !known.contains(canonicalHost(host)) { known.append(canonicalHost(host)); UserDefaults.standard.set(known, forKey: "KnownHosts") }
     }
 
     // MARK: Google Drive taalonafhankelijk
@@ -196,10 +212,14 @@ enum CloudLinks {
         return Parsed(mode: mode, provider: p, rest: Array(comps.dropFirst()))
     }
 
-    private static func existing(in root: URL, _ rel: String) -> URL? {
+    static func existing(in root: URL, _ rel: String) -> URL? {
+        let rootReal = root.resolvingSymlinksInPath().standardizedFileURL.path
         for variant in [rel, rel.decomposedStringWithCanonicalMapping] {
             let t = root.appendingPathComponent(variant).standardizedFileURL
-            if t.path.hasPrefix(root.standardizedFileURL.path + "/"), fm.fileExists(atPath: t.path) { return t }
+            guard t.path.hasPrefix(root.standardizedFileURL.path + "/"), fm.fileExists(atPath: t.path) else { continue }
+            // Ook na het volgen van symbolische koppelingen moet het doel binnen de gedeelde map liggen.
+            guard t.resolvingSymlinksInPath().standardizedFileURL.path.hasPrefix(rootReal + "/") else { continue }
+            return t
         }
         return nil
     }
@@ -244,6 +264,18 @@ enum CloudLinks {
         guard let p = parse(url), p.provider == .smb, p.rest.count >= 3 else { NSSound.beep(); return }
         let host = p.rest[0], share = p.rest[1]
         let rel = p.rest.dropFirst(2).joined(separator: "/")
+        // Onbekende server: eerst bevestigen, want een vervalste link mag deze Mac niet zomaar laten verbinden.
+        if !isKnownHost(host) {
+            NSApp.activate(ignoringOtherApps: true)
+            let a = NSAlert()
+            a.messageText = "Verbinden met server \(host)?"
+            a.informativeText = "Deze link wijst naar de share \u{201C}\(share)\u{201D} op een server die deze Mac nog niet kent. Verbind alleen als je de afzender vertrouwt."
+            a.addButton(withTitle: "Verbind")
+            a.addButton(withTitle: "Annuleer")
+            a.alertStyle = .warning
+            guard a.runModal() == .alertFirstButtonReturn else { return }
+            rememberHost(host)
+        }
         // Niet gemount: via Finder mounten (sleutelhanger of wachtwoordvraag) en wachten
         let shareEnc = share.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? share
         guard let smbURL = URL(string: "smb://\(host)/\(shareEnc)") else { return }

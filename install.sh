@@ -6,7 +6,6 @@ NAME="Sharelink - Finder"
 pkill -x "$NAME" 2>/dev/null || true
 rm -rf "/Applications/$NAME.app"
 cp -R "build/$NAME.app" /Applications/
-xattr -dr com.apple.quarantine "/Applications/$NAME.app" 2>/dev/null || true
 /System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister -f "/Applications/$NAME.app"
 /System/Library/CoreServices/pbs -update 2>/dev/null || true
 open -a "/Applications/$NAME.app"

@@ -12,6 +12,9 @@ struct SharelinkApp: App {
             a.dropFirst(2).forEach { print(CloudLinks.link(for: URL(fileURLWithPath: $0), mode: .file) ?? "GEEN") }
             exit(0)
         }
+        if a.count == 4, a[1] == "--check" {   // zelftest: ligt <rel> ook na symlinks binnen <root>?
+            print(CloudLinks.existing(in: URL(fileURLWithPath: a[2]), a[3])?.path ?? "GEEN"); exit(0)
+        }
         if a.count > 2, a[1] == "--resolve" {
             a.dropFirst(2).forEach { print(URL(string: $0).flatMap { CloudLinks.target(for: $0) }?.0.path ?? "GEEN") }
             exit(0)

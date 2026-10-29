@@ -19,6 +19,11 @@ if [ -n "$root" ]; then
     link=$("$BIN" --links "$f"); back=$("$BIN" --resolve "sharelink://${link#*#}")
     [ "$back" = "$f" ] || { echo "zelftest resolve FOUT: $f -> sharelink://${link#*#} -> $back"; exit 1; }
   fi
+  # Symlink-controle: een koppeling naar buiten de root mag niet door.
+  T=$(mktemp -d); mkdir -p "$T/root/map"; echo x > "$T/root/map/echt.txt"; ln -s /etc/hosts "$T/root/map/naarbuiten"
+  [ "$("$BIN" --check "$T/root" "map/echt.txt")" = "$T/root/map/echt.txt" ] || { echo "zelftest symlink FOUT: echt bestand geweigerd"; exit 1; }
+  [ "$("$BIN" --check "$T/root" "map/naarbuiten")" = "GEEN" ] || { echo "zelftest symlink FOUT: koppeling naar buiten toegelaten"; exit 1; }
+  rm -rf "$T"
   echo "zelftest ok"
 else
   echo "zelftest overgeslagen: geen Dropbox op deze Mac"

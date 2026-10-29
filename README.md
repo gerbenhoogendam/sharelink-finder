@@ -43,7 +43,7 @@ Standaard wijzen links naar `share-link.nl`, de pagina in `docs/` van deze repo.
 defaults write nl.itgsolutions.sharelink LinkBase 'https://open.jouwdomein.nl/#'
 ```
 
-Host dan `docs/index.html` op dat adres. Voor servershares die via IP én via hostnaam gemount worden, is er `HostAliases` in hetzelfde voorkeurendomein, bijvoorbeeld `{ "192.168.1.10" = "fileserver.local"; }`.
+Host dan `docs/index.html` op dat adres. Een server die de Mac nog niet kent, vraagt bij de eerste link om bevestiging; daarna niet meer. Voor servershares die via IP én via hostnaam gemount worden, is er `HostAliases` in hetzelfde voorkeurendomein, bijvoorbeeld `{ "192.168.1.10" = "fileserver.local"; }`.
 
 ## Beperkingen
 
