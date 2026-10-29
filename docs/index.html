@@ -393,6 +393,7 @@ footer a{color:inherit}
   <h2>Installeer het op twee Macs en stuur de eerste link.</h2>
   <div class="actions">
     <a class="btn" href="https://github.com/gerbenhoogendam/sharelink-finder/releases">Download voor macOS →</a>
+    <a class="btn line" id="tip" href="mailto:?subject=Links%20naar%20bestanden%20delen%20kan%20%C3%A9indelijk%20klikbaar%20naar%20de%20Finder!">Mail dit naar een collega ✉︎</a>
     <a class="btn line" href="https://github.com/gerbenhoogendam/sharelink-finder">Broncode op GitHub</a>
   </div>
 </section>
@@ -403,6 +404,19 @@ footer a{color:inherit}
 </footer></div>
 
 <script>
+// Tip-knop: opent de standaard mailclient zonder ontvanger, met onderwerp en een korte tekst die de verzender nog kan aanpassen.
+(() => {
+  const subject = 'Links naar bestanden delen kan éindelijk klikbaar naar de Finder!';
+  const body = [
+    'Hoi,', '',
+    'Ken je dit: je mailt iemand waar een bestand in Dropbox staat, en die gaat zoeken en bladeren.',
+    'Met Sharelink - Finder stuur je een link die bij de ander precies dat bestand opent, in hun eigen Dropbox, Google Drive, Synology Drive of op de server.',
+    'Gratis, open source, en er gaat niets naar buiten.', '',
+    'Kijk op https://share-link.nl', '',
+    'Groet,'
+  ].join('\r\n');
+  document.getElementById('tip').href = 'mailto:?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+})();
 (() => {
   const $ = id => document.getElementById(id);
   const zoom = $('zoom'), scene = $('scene'), cursor = $('cursor');
