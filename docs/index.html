@@ -61,6 +61,7 @@ html.redirect #redirect{display:block}
 .ch{padding:48px 0 56px}
 .ch-head{display:grid;grid-template-columns:3fr 9fr;gap:28px;align-items:baseline;margin-bottom:30px}
 .ch-head h2{font:400 clamp(28px,3.6vw,46px)/1.1 var(--serif);letter-spacing:-.02em;margin:0;text-wrap:balance}
+.ch-sub{margin:12px 0 0;color:var(--ink-2);font-size:17px;max-width:40em}
 /* demo */
 .stage{container-type:inline-size;border:2px solid var(--ink);background:var(--ink)}
 .stage .chrome{display:flex;align-items:center;justify-content:space-between;padding:8px 14px;color:#d9d3c6;font:600 12px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;border-bottom:1px solid #3a3a3a}
@@ -243,7 +244,7 @@ footer a{color:inherit}
 
 <div class="wrap"><hr class="rule"></div>
 <section class="ch wrap" id="demo">
-  <div class="ch-head"><div class="mono">01 — De demo</div><h2>Negen stappen, van het probleem naar de map van je collega.</h2></div>
+  <div class="ch-head"><div class="mono">01 — De demo</div><div><h2>Klikken, niet bladeren en zoeken.</h2><p class="ch-sub">Je kent dit probleem: jij hebt het bestand al voor je, Anna moet gaan zoeken, bladeren en gokken dat ze het juiste bestand heeft. Kortom, gemartel.</p></div></div>
   <div class="stage">
     <div class="chrome"><span>Jouw computer</span><span>Anna’s computer</span></div>
     <div class="scene" id="scene"><div class="zoom" id="zoom">
@@ -355,7 +356,7 @@ footer a{color:inherit}
     <div class="url"><span class="u1">https://share-link.nl/</span><span class="u2">#</span><span class="u3">folder/dropbox/Projecten/Acme%20Corp/Website/website-v03.pdf</span></div>
     <ul>
       <li><b class="u1">De pagina</b><br>Eén statisch bestand dat de link doorgeeft aan de app en het tabblad sluit.</li>
-      <li><b class="u2">Het hekje</b><br>Alles hierna blijft in de browser. Het wordt niet verstuurd, dus het kan ook niet worden gelogd.</li>
+      <li><b class="u2">Het hekje</b><br>Alles hierna blijft in de browser van de ontvanger en gaat nooit naar share-link.nl, dus daar valt niets te loggen. Wie het pad wél ziet: alleen wie je bericht kan lezen, net als de rest van je mail.</li>
       <li><b class="u3">Het pad</b><br>Welke map, welk bestand, binnen jullie gedeelde map. Geen gebruikersnaam, geen schijflocatie.</li>
     </ul>
   </div>
