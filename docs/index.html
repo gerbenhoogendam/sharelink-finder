@@ -468,8 +468,11 @@ Geef daarna een duidelijk oordeel: kunnen wij deze app met een gerust hart op de
 <script>
 // Kopieerknop voor de AI-opdracht.
 (() => {
-  const btn = document.getElementById('copy-prompt'), txt = document.getElementById('prompt').textContent;
-  btn.onclick = () => navigator.clipboard.writeText(txt).then(() => { btn.textContent = '✓ Gekopieerd'; setTimeout(() => btn.textContent = 'Kopieer de opdracht', 1800); });
+  const btn = document.getElementById('copy-prompt'), pre = document.getElementById('prompt');
+  const done = ok => { btn.textContent = ok ? '✓ Gekopieerd' : 'Selecteer de tekst en kopieer zelf'; setTimeout(() => btn.textContent = 'Kopieer de opdracht', 2200); };
+  // Eerst de moderne klembord-API; lukt die niet (oude browser, geen focus), dan selecteren en het oude kopieercommando.
+  const fallback = () => { const r = document.createRange(); r.selectNodeContents(pre); const sel = getSelection(); sel.removeAllRanges(); sel.addRange(r); let ok = false; try { ok = document.execCommand('copy'); } catch (e) {} done(ok); };
+  btn.onclick = () => (navigator.clipboard ? navigator.clipboard.writeText(pre.textContent).then(() => done(true), fallback) : fallback());
 })();
 // Tip-knoppen: openen het mailprogramma zonder ontvanger, met onderwerp en tekst; alleen de bron verschilt per knop.
 (() => {
