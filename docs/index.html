@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex">
+<title>Bestand openen…</title>
+<style>body{font:16px -apple-system,sans-serif;margin:3em;color:#333}</style>
+</head>
+<body>
+<p id="msg">Bestand wordt lokaal geopend…</p>
+<p><a id="retry" href="#">Werkt het niet? Klik hier.</a></p>
+<script>
+  const h = location.hash.slice(1);
+  if (/^(file|folder)\/(dropbox|gdrive|synology|smb)\//.test(h)) {
+    const target = 'sharelink://' + h;
+    document.getElementById('retry').href = target;
+    location.href = target;
+    setTimeout(() => window.close(), 1500);
+  } else {
+    document.getElementById('msg').textContent = 'Ongeldige link.';
+  }
+</script>
+<p style="color:#888;font-size:13px">Alleen voor Macs met Sharelink - Finder.</p>
+</body>
+</html>
