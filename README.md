@@ -48,7 +48,7 @@ Host dan `docs/index.html` op dat adres. Voor servershares die via IP én via ho
 - Windows en iPhone worden niet ondersteund; de pagina toont dan "Ongeldige link".
 - Online-only bestanden worden eerst gedownload, dus een groot bestand opent met vertraging.
 - Google Drive: de bovenste map ("Mijn Drive", "Gedeelde drives") wordt taalonafhankelijk gecodeerd; diepere mapnamen moeten exact overeenkomen.
-- `build.sh` signeert ad hoc. `install.sh` haalt daarom de quarantaine-vlag van de app af. Voor verspreiding buiten je eigen Macs is Developer ID-signing en notarisatie nodig.
+- `build.sh` signeert ad hoc; `install.sh` haalt daarom de quarantaine-vlag van de app af. Voor verspreiding buiten je eigen Macs doet `release.sh` het volledige werk: Developer ID-signing met hardened runtime, notarisatie en een geniet ticket, met als resultaat `build/Sharelink - Finder.zip`.
 
 ## Licentie
 
