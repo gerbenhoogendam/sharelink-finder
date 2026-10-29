@@ -206,8 +206,15 @@ code{font:.88em var(--mono);background:#ebe4d4;padding:2px 5px;border-radius:3px
 .tip-row{display:flex;flex-wrap:wrap;gap:12px;margin-top:14px}
 .tip-row .btn img{width:22px;height:22px}
 .tip-note{margin:12px 0 0;color:var(--ink-2);font-size:14px}
-footer{border-top:1.5px solid var(--rule);padding:22px 0 50px;display:flex;flex-wrap:wrap;gap:18px 30px;justify-content:space-between;color:var(--ink-2);font-size:14px}
+footer{border-top:1.5px solid var(--rule);padding:26px 0 50px;color:var(--ink-2);font-size:14px}
 footer a{color:inherit}
+.credits{display:flex;flex-wrap:wrap;gap:24px 48px;justify-content:space-between;align-items:center;padding-bottom:22px;margin-bottom:18px;border-bottom:1px solid #cfc8ba}
+.credit{display:flex;align-items:center;gap:16px;text-decoration:none;color:var(--ink-2)}
+.credit img{height:46px;width:auto}
+.credit span{line-height:1.4}
+.credit b{color:var(--ink);font-weight:600}
+.credit:hover b{color:var(--blue)}
+.legal{display:flex;flex-wrap:wrap;gap:12px 30px;justify-content:space-between}
 @media(max-width:860px){
   .hero{grid-template-columns:1fr;gap:18px}.sticker{justify-self:start;width:120px;order:-1}
   .ch-head{grid-template-columns:1fr;gap:8px}
@@ -415,8 +422,14 @@ footer a{color:inherit}
 </section>
 
 <div class="wrap"><footer>
-  <span>Sharelink - Finder · MIT-licentie · gesigneerd en genotariseerd voor macOS</span>
-  <span><a href="https://github.com/gerbenhoogendam/sharelink-finder/releases">Download</a> · <a href="https://github.com/gerbenhoogendam/sharelink-finder">GitHub</a></span>
+  <div class="credits">
+    <a class="credit" href="https://itgsolutions.nl"><img src="img/itg-solutions.png" alt="ITG Solutions"><span>Aangeboden door <b>ITG Solutions</b><br>Dé No-Nonsense Apple Experts uit Barneveld</span></a>
+    <a class="credit" href="https://techno-otter.nl"><img src="img/techno-otter.png" alt="Techno Otter"><span>Slim gebouwd door<br><b>Techno Otter</b></span></a>
+  </div>
+  <div class="legal">
+    <span>Sharelink - Finder · MIT-licentie · gesigneerd en genotariseerd voor macOS</span>
+    <span><a href="https://github.com/gerbenhoogendam/sharelink-finder/releases">Download</a> · <a href="https://github.com/gerbenhoogendam/sharelink-finder">GitHub</a></span>
+  </div>
 </footer></div>
 
 <script>
