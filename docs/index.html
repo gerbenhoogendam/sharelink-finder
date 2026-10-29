@@ -14,8 +14,12 @@
   if (/^(file|folder)\/(dropbox|gdrive|synology|smb)\//.test(h)) {
     const target = 'sharelink://' + h;
     document.getElementById('retry').href = target;
+    // Sluit het tabblad zodra de browser de focus verliest: dat is het moment dat Finder of de app naar voren komt.
+    // Zo blijft de "mag deze pagina de app openen"-vraag staan tot er geklikt is. Browsers staan sluiten alleen toe
+    // bij een tabblad dat door een externe link is geopend; anders blijft het staan.
+    addEventListener('blur', () => window.close());
     location.href = target;
-    setTimeout(() => window.close(), 1500);
+    setTimeout(() => window.close(), 10000);   // terugval als de focuswissel niet doorkomt
   } else {
     document.getElementById('msg').textContent = 'Ongeldige link.';
   }
