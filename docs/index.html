@@ -63,6 +63,9 @@ html.redirect #redirect{display:block}
 .ch-head h2{font:400 clamp(28px,3.6vw,46px)/1.1 var(--serif);letter-spacing:-.02em;margin:0;text-wrap:balance}
 .ch-sub{margin:12px 0 0;color:var(--ink-2);font-size:17px;max-width:40em}
 /* demo */
+/* Scène niet hoger dan het venster toelaat, zodat kop, scène, tekst en knoppen samen in beeld passen. */
+#demo{scroll-margin-top:8px}
+#demo .stage,#demo .demo-foot{max-width:min(100%,calc((100vh - 380px) * 16 / 9));margin-left:auto;margin-right:auto}
 .stage{container-type:inline-size;border:2px solid var(--ink);background:var(--ink)}
 .stage .chrome{display:flex;align-items:center;justify-content:space-between;padding:8px 14px;color:#d9d3c6;font:600 12px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;border-bottom:1px solid #3a3a3a}
 .scene{position:relative;aspect-ratio:16/9;font-size:1.35cqw;color:#1c2733;overflow:hidden;background:#0e1420}
