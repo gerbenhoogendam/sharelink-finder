@@ -10,7 +10,7 @@ Menubalk-app voor macOS die een link maakt naar een bestand of map in Dropbox, G
 
 1. Selecteer een bestand of map in Finder en kies in de menubalk **Link bestand**, **Link map** of **Link map & bestand**. De link staat op het klembord.
 2. De link is een gewoon `https://`-adres, dus klikbaar in Mail, Outlook, Teams, WhatsApp en Slack:
-   `https://gerbenhoogendam.github.io/sharelink-finder/#file/dropbox/Klanten/Offerte.pdf`
+   `https://share-link.nl/#file/dropbox/Klanten/Offerte.pdf`
 3. De pagina op dat adres stuurt de browser door naar `sharelink://file/dropbox/Klanten/Offerte.pdf`. Het pad staat achter `#` en wordt nooit naar de server gestuurd.
 4. Sharelink - Finder op de Mac van de ontvanger zoekt de eigen Dropbox-, Google Drive- of Synology-map, of mount de servershare, en opent het bestand of toont het in Finder.
 
@@ -37,7 +37,7 @@ Ook de Macs die alleen links **ontvangen** hebben de app nodig, want die opent d
 
 ## Eigen domein of hostnamen
 
-Standaard wijzen links naar de pagina in `docs/` van deze repo. Een eigen adres instellen, zonder opnieuw te bouwen:
+Standaard wijzen links naar `share-link.nl`, de pagina in `docs/` van deze repo. Een eigen adres instellen, zonder opnieuw te bouwen:
 
 ```zsh
 defaults write nl.itgsolutions.sharelink LinkBase 'https://open.jouwdomein.nl/#'

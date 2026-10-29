@@ -44,8 +44,8 @@ enum Provider: String, CaseIterable {
 }
 
 enum CloudLinks {
-    // Standaard de GitHub Pages-redirect; eigen domein zonder opnieuw bouwen: defaults write nl.itgsolutions.sharelink LinkBase 'https://open.jouwdomein.nl/#'
-    static var base: String { UserDefaults.standard.string(forKey: "LinkBase") ?? "https://gerbenhoogendam.github.io/sharelink-finder/#" }
+    // Standaard de redirectpagina op share-link.nl (GitHub Pages); eigen domein zonder opnieuw bouwen: defaults write nl.itgsolutions.sharelink LinkBase 'https://open.jouwdomein.nl/#'
+    static var base: String { UserDefaults.standard.string(forKey: "LinkBase") ?? "https://share-link.nl/#" }
     static let fm = FileManager.default
 
     static var home: URL {

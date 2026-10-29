@@ -12,7 +12,7 @@ codesign --force --sign - "$APP"
 root=$(plutil -extract business.root_path raw -o - ~/.dropbox/info.json 2>/dev/null || plutil -extract personal.path raw -o - ~/.dropbox/info.json 2>/dev/null || true)
 if [ -n "$root" ]; then
   got=$("$BIN" --links "$root/Kop of Munt/02_Website/KoM-logo.pdf" "$HOME/Desktop/x.pdf")
-  want=$'https://gerbenhoogendam.github.io/sharelink-finder/#file/dropbox/Kop%20of%20Munt/02_Website/KoM-logo.pdf\nGEEN'
+  want=$'https://share-link.nl/#file/dropbox/Kop%20of%20Munt/02_Website/KoM-logo.pdf\nGEEN'
   [ "$got" = "$want" ] || { echo "zelftest link FOUT:"; echo "$got"; exit 1; }
   f=$(find "$root" -maxdepth 2 -type f ! -name '.*' ! -name 'Icon*' | LC_ALL=C grep -v '[^ -~]' | head -1)
   if [ -n "$f" ]; then
