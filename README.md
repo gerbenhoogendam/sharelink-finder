@@ -52,6 +52,30 @@ Host dan `docs/index.html` op dat adres. Voor servershares die via IP én via ho
 - Google Drive: de bovenste map ("Mijn Drive", "Gedeelde drives") wordt taalonafhankelijk gecodeerd; diepere mapnamen moeten exact overeenkomen.
 - `build.sh` signeert ad hoc; `install.sh` haalt daarom de quarantaine-vlag van de app af. Voor verspreiding buiten je eigen Macs doet `release.sh` het volledige werk: Developer ID-signing met hardened runtime, notarisatie en een geniet ticket, met als resultaat `build/Sharelink - Finder.zip`.
 
+## Laat een AI het zelf nakijken
+
+Geloof ons niet op ons woord. Plak deze opdracht in ChatGPT, Claude, Gemini of een andere AI; de code is openbaar, dus die kan hem regel voor regel lezen.
+
+```
+Ik overweeg een macOS-app in te zetten binnen onze organisatie: Sharelink - Finder.
+Website: https://share-link.nl
+Broncode: https://github.com/gerbenhoogendam/sharelink-finder
+
+Wat de app belooft: je selecteert een bestand in Dropbox, Google Drive, Synology Drive of op een servershare en maakt er een link van die bij een collega precies dat bestand opent, in diens eigen lokale kopie. De makers stellen dat er niets wordt geüpload, niets wordt gelogd en dat er geen gegevens over onze organisatie, onze bestanden of onze medewerkers naar buiten gaan.
+
+Onderzoek dat grondig en onafhankelijk, alsof je onze security officer bent. Lees de volledige broncode in de repository (CloudLinks.swift, App.swift, docs/index.html, build.sh, install.sh, release.sh, Info.plist en Sharelink.entitlements) en beantwoord:
+
+1. Netwerkverkeer. Maakt de app zelf ooit een netwerkverbinding, en zo ja naar welke adressen? Wat staat er precies in een link, en wat bereikt de server op share-link.nl wel en niet? Leg uit wat het hekje (#) in de link doet.
+2. Gegevens. Welke informatie over bestanden, mappen, gebruikersnamen of de computer komt in een link terecht, en bij wie kan die terechtkomen?
+3. Rechten. Welke macOS-permissies en entitlements vraagt de app (Finder-automatisering, hardened runtime, sandbox) en waarvoor worden ze gebruikt? Vraagt de app iets dat meer is dan nodig?
+4. Lokaal gedrag. Wat doet de app met het bestandssysteem? Kan een link iets openen buiten onze gedeelde mappen, bijvoorbeeld via ../ of een absoluut pad? Welke bestandstypen opent de app wel en niet automatisch?
+5. Verspreiding. Is de app gesigneerd en genotariseerd, en klopt wat de releasenotes daarover zeggen met de scripts in de repository?
+6. Afhankelijkheden. Gebruikt de app externe bibliotheken, analytics, crashrapportage of een updatemechanisme dat naar buiten belt?
+7. Misbruik. Welk risico loopt een medewerker die op een kwaadaardig gemaakte sharelink-link klikt? Wat is het slechtst denkbare scenario?
+
+Geef daarna een duidelijk oordeel: kunnen wij deze app met een gerust hart op de Macs van onze medewerkers installeren? Onderbouw elk punt met het bestand en de regel waar je het in de code hebt gezien, zeg expliciet wat je niet hebt kunnen controleren, en noem de voorwaarden of aanpassingen die je zou aanraden voordat we uitrollen.
+```
+
 ## Licentie
 
 MIT, zie [LICENSE](LICENSE).
