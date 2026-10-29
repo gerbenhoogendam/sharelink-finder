@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Sharelink - Finder</title>
-<meta name="description" content="Stuur een collega een link naar een bestand in jullie gedeelde map. Bij hen opent precies dat bestand, in hun eigen Dropbox, Google Drive, Synology Drive of op de server.">
+<meta name="description" content="Stuur een link naar een bestand in jullie gedeelde map. Bij je collega opent precies dat bestand, in hun eigen Dropbox, Google Drive, Synology Drive of op de server.">
 <link rel="icon" href="icon.png">
 <script>
   // Redirect: staat er een pad achter het hekje, dan meteen door naar de app en de uitleg niet tonen.
@@ -22,37 +22,54 @@
   })();
 </script>
 <style>
-:root{--bg:#f4f7fb;--card:#fff;--ink:#17202b;--muted:#5d6b7a;--blue:#1f7cf0;--blue-d:#145fc0;--ok:#1d9a5b;--line:#e3e9f1;--radius:18px;--shadow:0 12px 32px rgba(20,40,80,.10)}
-@media(prefers-color-scheme:dark){:root{--bg:#0f1520;--card:#172130;--ink:#edf2f8;--muted:#9fb0c3;--line:#263244;--shadow:0 12px 32px rgba(0,0,0,.45)}}
+:root{--paper:#f6f1e7;--ink:#141414;--ink-2:#4d4a44;--rule:#141414;--blue:#1d5fd1;--mark:#ffe34d;--serif:ui-serif,"New York",Georgia,"Times New Roman",serif;--sans:-apple-system,BlinkMacSystemFont,"SF Pro Text",Helvetica,Arial,sans-serif;--mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace}
 *{box-sizing:border-box}
 html,body{margin:0}
-body{font:16px/1.55 -apple-system,BlinkMacSystemFont,"SF Pro Text",Helvetica,Arial,sans-serif;color:var(--ink);background:var(--bg);-webkit-font-smoothing:antialiased}
-a{color:var(--blue)}
-h1,h2,h3{line-height:1.15;letter-spacing:-.01em}
-.wrap{max-width:1040px;margin:0 auto;padding:0 20px}
+body{font:17px/1.5 var(--sans);color:var(--ink);background:var(--paper);-webkit-font-smoothing:antialiased}
+a{color:inherit}
+mark{background:linear-gradient(transparent 35%,var(--mark) 35%,var(--mark) 88%,transparent 88%);color:inherit;padding:0 .1em}
+.wrap{max-width:1180px;margin:0 auto;padding:0 28px}
+.mono{font:600 12px/1.4 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2)}
+hr.rule{border:0;border-top:1.5px solid var(--rule);margin:0}
 /* redirect-modus */
 #redirect{display:none;padding:3em;font-size:18px}
 html.redirect body>*{display:none}
 html.redirect #redirect{display:block}
-/* kop */
-header{padding:48px 0 24px;text-align:center}
-header img{width:112px;height:112px;border-radius:26px;box-shadow:var(--shadow)}
-header h1{font-size:clamp(28px,5vw,44px);margin:18px 0 8px}
-header p{font-size:clamp(17px,2.4vw,21px);color:var(--muted);max-width:640px;margin:0 auto}
-.cta{display:inline-flex;gap:10px;align-items:center;margin-top:22px;background:var(--blue);color:#fff;text-decoration:none;padding:12px 20px;border-radius:999px;font-weight:600;box-shadow:0 8px 20px rgba(31,124,240,.35)}
-.cta:hover{background:var(--blue-d)}
-.sub{display:block;margin-top:10px;color:var(--muted);font-size:14px}
+/* topbalk */
+.top{display:flex;align-items:center;justify-content:space-between;padding:22px 0}
+.top .brand{display:flex;align-items:center;gap:12px;font-weight:700;text-decoration:none}
+.top .brand img{width:34px;height:34px;border-radius:8px}
+.top nav{display:flex;gap:26px}
+.top nav a{text-decoration:none;font-size:15px}
+.top nav a:hover{text-decoration:underline}
+/* held */
+.hero{display:grid;grid-template-columns:7fr 5fr;gap:40px;align-items:end;padding:56px 0 46px}
+.hero h1{font:400 clamp(40px,6.2vw,84px)/1 var(--serif);letter-spacing:-.025em;margin:14px 0 26px;text-wrap:balance}
+.hero h1 em{font-style:italic;color:var(--blue)}
+.hero p{font-size:clamp(18px,2vw,22px);line-height:1.45;max-width:34em;margin:0 0 30px;color:var(--ink-2)}
+.hero p b{color:var(--ink);font-weight:600}
+.actions{display:flex;flex-wrap:wrap;gap:14px;align-items:center}
+.btn{display:inline-flex;align-items:center;gap:10px;background:var(--ink);color:var(--paper);text-decoration:none;font-weight:600;padding:15px 22px;border:2px solid var(--ink);font-size:16px}
+.btn:hover{background:var(--blue);border-color:var(--blue)}
+.btn.line{background:transparent;color:var(--ink)}
+.btn.line:hover{background:var(--ink);color:var(--paper)}
+.hero .meta{margin-top:18px}
+.sticker{justify-self:end;width:min(100%,300px);transform:rotate(-5deg);filter:drop-shadow(0 18px 24px rgba(0,0,0,.18))}
+/* hoofdstukken */
+.ch{padding:48px 0 56px}
+.ch-head{display:grid;grid-template-columns:3fr 9fr;gap:28px;align-items:baseline;margin-bottom:30px}
+.ch-head h2{font:400 clamp(28px,3.6vw,46px)/1.1 var(--serif);letter-spacing:-.02em;margin:0;text-wrap:balance}
 /* demo */
-.demo{margin:28px 0 56px}
-.stage{container-type:inline-size;border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);background:#0d1a2b}
-.scene{position:relative;aspect-ratio:16/9;font-size:1.35cqw;color:#1c2733;overflow:hidden;background:radial-gradient(120% 90% at 50% 0%,#2a4f86 0%,#0f2240 55%,#0a1628 100%)}
+.stage{container-type:inline-size;border:2px solid var(--ink);background:var(--ink)}
+.stage .chrome{display:flex;align-items:center;justify-content:space-between;padding:8px 14px;color:#d9d3c6;font:600 12px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;border-bottom:1px solid #3a3a3a}
+.scene{position:relative;aspect-ratio:16/9;font-size:1.35cqw;color:#1c2733;overflow:hidden;background:#0e1420}
 @supports not (font-size:1cqw){.scene{font-size:13px}}
 .zoom{position:absolute;inset:0;transition:transform .9s cubic-bezier(.2,.8,.2,1);will-change:transform}
-.label{position:absolute;top:2.2%;font-size:1.1em;font-weight:700;color:#cfe0ff;letter-spacing:.04em;text-transform:uppercase}
-.label.l{left:5%}.label.r{left:53%}
-.screen{position:absolute;top:9%;width:46%;height:86%;border-radius:1em;background:linear-gradient(160deg,#dcecff,#9ec4f5 60%,#7ea8e6);box-shadow:0 1.2em 2.5em rgba(0,0,0,.45),inset 0 0 0 .18em #1a2230;overflow:hidden}
+.label{position:absolute;top:2.4%;font:600 1em/1 var(--mono);color:#b9c6da;letter-spacing:.12em;text-transform:uppercase}
+.label.l{left:4.5%}.label.r{left:52.5%}
+.screen{position:absolute;top:9%;width:46%;height:86%;border-radius:.8em;background:linear-gradient(160deg,#dcecff,#9ec4f5 60%,#7ea8e6);box-shadow:0 1.2em 2.5em rgba(0,0,0,.5),inset 0 0 0 .18em #22282f;overflow:hidden}
 .screen.s{left:3%}.screen.r{left:51%}
-.menubar{position:absolute;left:0;right:0;top:0;height:9%;background:rgba(255,255,255,.75);backdrop-filter:blur(6px);display:flex;align-items:center;gap:.9em;padding:0 .9em;font-size:.95em;font-weight:600}
+.menubar{position:absolute;left:0;right:0;top:0;height:9%;background:rgba(255,255,255,.78);display:flex;align-items:center;gap:.9em;padding:0 .9em;font-size:.95em;font-weight:600}
 .menubar .apple{width:.9em;height:.9em;border-radius:50%;background:#222}
 .menubar .sp{flex:1}
 .menubar .tray{display:flex;align-items:center;gap:.7em}
@@ -62,7 +79,7 @@ header p{font-size:clamp(17px,2.4vw,21px);color:var(--muted);max-width:640px;mar
 .menu{position:absolute;right:4%;top:9.5%;background:rgba(250,250,252,.98);border-radius:.6em;box-shadow:0 .6em 2em rgba(0,0,0,.35);padding:.35em;min-width:12em;font-size:.95em;opacity:0;transform:translateY(-.4em);transition:.25s;pointer-events:none;z-index:5}
 .menu.open{opacity:1;transform:none}
 .menu div{display:flex;align-items:center;gap:.5em;padding:.35em .7em;border-radius:.4em}
-.menu div.hover{background:var(--blue);color:#fff}
+.menu div.hover{background:#1f7cf0;color:#fff}
 .menu .sep{height:1px;background:#d6dbe3;margin:.3em .5em;padding:0}
 .badge{display:inline-grid;place-items:center;width:1.25em;height:1.25em;border-radius:.3em;font-size:.8em;font-weight:800;color:#fff;background:#0061ff}
 .window{position:absolute;background:#fff;border-radius:.7em;box-shadow:0 .8em 2em rgba(0,0,0,.35);overflow:hidden;transition:opacity .4s,transform .4s}
@@ -81,10 +98,10 @@ header p{font-size:clamp(17px,2.4vw,21px);color:var(--muted);max-width:640px;mar
 .finder .row .ic{width:1.1em;height:1.35em;border-radius:.15em;background:linear-gradient(#fff,#e9e9ee);border:1px solid #c9ccd3;flex:none}
 .finder .row .ic.pdf{border-color:#e05252;background:linear-gradient(#fff 55%,#f7d0d0)}
 .finder .row .ic.fld{height:1em;background:linear-gradient(#8fc3ff,#5aa0f2);border-color:#4a8fe0}
-.finder .row.sel{background:var(--blue);color:#fff}
+.finder .row.sel{background:#1f7cf0;color:#fff}
 .finder .path{display:flex;align-items:center;gap:.35em;padding:0 .7em;font-size:.72em;color:#666;background:#f6f6f8;border-top:1px solid #e3e3e8;white-space:nowrap;overflow:hidden}
 .finder .path b{color:#222;font-weight:600}
-.finder .path .hl{color:var(--blue-d);font-weight:700}
+.finder .path .hl{color:#145fc0;font-weight:700}
 .toast{position:absolute;right:3%;top:11%;transform:translateY(-.6em);background:#1c2733;color:#fff;padding:.5em .9em;border-radius:.6em;font-size:.95em;opacity:0;transition:.3s;z-index:6;white-space:nowrap}
 .toast.show{opacity:1;transform:none}
 .toast b{color:#7dffb0}
@@ -92,20 +109,19 @@ header p{font-size:clamp(17px,2.4vw,21px);color:var(--muted);max-width:640px;mar
 .compose.show{opacity:1;transform:none}
 .compose.sent{opacity:0;transform:translate(110%,-10%) scale(.6);transition:.8s cubic-bezier(.5,0,.8,.4)}
 .compose .to{color:#777;border-bottom:1px solid #eee;padding-bottom:.3em;margin-bottom:.5em}
-.compose .link{color:var(--blue);text-decoration:underline;word-break:break-all;font-size:.9em}
+.compose .link{color:#1f7cf0;text-decoration:underline;word-break:break-all;font-size:.9em}
 .compose .send{margin-top:.6em;text-align:right}
-.compose .send span{background:var(--blue);color:#fff;padding:.3em .9em;border-radius:.5em;font-weight:600}
+.compose .send span{background:#1f7cf0;color:#fff;padding:.3em .9em;border-radius:.5em;font-weight:600}
 .mail{left:7%;top:16%;width:86%;height:70%;opacity:0;transform:translateY(1em)}
 .mail.show{opacity:1;transform:none}
 .mail .msg{padding:.9em 1em;font-size:.9em;line-height:1.5}
 .mail .msg .hd{color:#777;border-bottom:1px solid #eee;padding-bottom:.4em;margin-bottom:.6em}
-.mail .msg a{color:var(--blue);word-break:break-all;border-radius:.25em;padding:0 .15em}
+.mail .msg a{color:#1f7cf0;word-break:break-all;border-radius:.25em;padding:0 .15em}
 .mail .msg a.clicked{background:#dbe9ff}
 .browser{left:14%;top:26%;width:72%;height:40%;opacity:0;transform:scale(.9);z-index:8}
 .browser.show{opacity:1;transform:none}
 .browser .url{height:1.8em;margin:.4em .8em;border-radius:.5em;background:#f0f1f4;display:flex;align-items:center;padding:0 .7em;font-size:.8em;color:#555;white-space:nowrap;overflow:hidden}
 .browser .pg{padding:1em;font-size:.95em;color:#333}
-.browser .pg .dots{display:inline-block;width:1.2em;text-align:left}
 .finder.r2{opacity:0;transform:translateY(1em);z-index:9}
 .finder.r2.show{opacity:1;transform:none}
 .cursor{position:absolute;width:1.4em;height:1.4em;left:30%;top:60%;transition:left .7s cubic-bezier(.3,.7,.3,1),top .7s cubic-bezier(.3,.7,.3,1),opacity .3s;opacity:0;z-index:20;pointer-events:none;filter:drop-shadow(0 .2em .3em rgba(0,0,0,.4))}
@@ -113,38 +129,63 @@ header p{font-size:clamp(17px,2.4vw,21px);color:var(--muted);max-width:640px;mar
 .cursor::after{content:"";position:absolute;left:-.7em;top:-.7em;width:2.8em;height:2.8em;border-radius:50%;border:.2em solid #fff;opacity:0;transform:scale(.4)}
 .cursor.click::after{animation:ring .45s ease-out}
 @keyframes ring{0%{opacity:.9;transform:scale(.4)}100%{opacity:0;transform:scale(1.2)}}
-.caption{min-height:5em;margin:16px 0 10px;text-align:center;font-size:clamp(16px,2.2vw,20px);font-weight:600}
-.caption small{display:block;font-weight:400;color:var(--muted);font-size:.8em;margin-top:.2em}
-.controls{display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap}
-.btn{border:0;background:var(--blue);color:#fff;font:inherit;font-weight:600;padding:10px 18px;border-radius:999px;cursor:pointer}
-.btn:hover{background:var(--blue-d)}
-.btn.ghost{background:transparent;color:var(--blue);border:2px solid var(--blue)}
-.btn:disabled{opacity:.35;cursor:default}
-.dots{display:flex;gap:6px}
-.dots button{width:10px;height:10px;border-radius:50%;border:0;background:#b9c6d6;padding:0;cursor:pointer}
-.dots button.on{background:var(--blue);transform:scale(1.25)}
-.auto{display:flex;align-items:center;gap:6px;color:var(--muted);font-size:14px}
-/* secties */
-section.txt{padding:28px 0}
-section.txt h2{font-size:clamp(22px,3.4vw,30px);margin:0 0 6px;text-align:center}
-section.txt .lead{text-align:center;color:var(--muted);max-width:620px;margin:0 auto 24px}
-.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
-.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:22px;box-shadow:var(--shadow)}
-.card .em{font-size:30px;line-height:1;margin-bottom:10px}
-.card h3{margin:0 0 6px;font-size:18px}
-.card p{margin:0;color:var(--muted);font-size:15px}
-.chips{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
-.chip{display:inline-flex;align-items:center;gap:8px;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:8px 14px;font-weight:600;box-shadow:var(--shadow)}
-.chip i{width:14px;height:14px;border-radius:4px;display:inline-block}
-.chip.no{opacity:.55;font-weight:500}
-.steps{counter-reset:s;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
-.steps div{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:20px 20px 20px 58px;position:relative;box-shadow:var(--shadow)}
-.steps div::before{counter-increment:s;content:counter(s);position:absolute;left:18px;top:18px;width:28px;height:28px;border-radius:50%;background:var(--blue);color:#fff;font-weight:700;display:grid;place-items:center}
-.steps h3{margin:0 0 4px;font-size:17px}
-.steps p{margin:0;color:var(--muted);font-size:15px}
-code{font:13px/1.4 ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(127,127,127,.12);padding:2px 6px;border-radius:6px;word-break:break-all}
-footer{text-align:center;color:var(--muted);font-size:14px;padding:30px 0 50px}
-footer a{color:var(--muted)}
+.demo-foot{display:grid;grid-template-columns:1fr auto;gap:24px;align-items:start;padding-top:18px}
+.caption{min-height:4.6em;font:400 clamp(18px,2.1vw,24px)/1.3 var(--serif)}
+.caption small{display:block;font:14px/1.5 var(--sans);color:var(--ink-2);margin-top:6px}
+.controls{display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:flex-end}
+.controls .ui{border:2px solid var(--ink);background:transparent;color:var(--ink);font:600 14px var(--sans);padding:10px 16px;cursor:pointer}
+.controls .ui.primary{background:var(--ink);color:var(--paper)}
+.controls .ui:hover{background:var(--blue);border-color:var(--blue);color:#fff}
+.controls .ui:disabled{opacity:.3;cursor:default}
+.counter{font:600 13px var(--mono);letter-spacing:.1em;min-width:3.2em;text-align:center}
+.auto{display:flex;align-items:center;gap:6px;font:13px var(--mono);letter-spacing:.06em;color:var(--ink-2);margin-left:6px}
+/* privacy */
+.state{font:400 clamp(34px,5.4vw,72px)/1.02 var(--serif);letter-spacing:-.025em;margin:0 0 34px;max-width:14em;text-wrap:balance}
+.facts{display:grid;grid-template-columns:repeat(3,1fr);border-top:1.5px solid var(--rule)}
+.facts div{padding:22px 24px 26px 0;border-right:1px solid #cfc8ba}
+.facts div:last-child{border-right:0}
+.facts div+div{padding-left:24px}
+.facts h3{font:600 16px var(--sans);margin:14px 0 8px}
+.facts p{margin:0;color:var(--ink-2);font-size:15.5px}
+.anatomy{margin-top:40px;border:2px solid var(--ink);padding:26px 28px;background:#fffdf8}
+.anatomy .url{font:500 clamp(14px,1.9vw,22px)/1.6 var(--mono);word-break:break-all;margin:10px 0 18px}
+.anatomy .url span{padding:.05em .25em;border-radius:3px}
+.anatomy .u1{background:#e2e9f7}.anatomy .u2{background:var(--mark)}.anatomy .u3{background:#e6f1e4}
+.anatomy ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.anatomy li{font-size:15px;color:var(--ink-2)}
+.anatomy li b{display:inline-block;font:600 12px var(--mono);letter-spacing:.1em;text-transform:uppercase;padding:2px 6px;border-radius:3px;margin-bottom:6px;color:var(--ink)}
+/* providers */
+.prov{display:grid;grid-template-columns:repeat(4,1fr);border-top:1.5px solid var(--rule)}
+.prov div{padding:22px 20px 24px 0;border-right:1px solid #cfc8ba}
+.prov div:last-child{border-right:0}
+.prov div+div{padding-left:20px}
+.prov .sw{width:14px;height:14px;display:inline-block;margin-bottom:12px}
+.prov h3{font:600 17px var(--sans);margin:0 0 4px}
+.prov p{margin:0;color:var(--ink-2);font-size:15px}
+.prov-note{margin:18px 0 0;color:var(--ink-2);font-size:15px}
+/* hoe */
+.how{border-top:1.5px solid var(--rule)}
+.how div{display:grid;grid-template-columns:90px 1fr 2fr;gap:24px;padding:24px 0;border-bottom:1px solid #cfc8ba;align-items:baseline}
+.how .n{font:400 44px/1 var(--serif);color:var(--blue)}
+.how h3{font:600 18px var(--sans);margin:0}
+.how p{margin:0;color:var(--ink-2)}
+code{font:.88em var(--mono);background:#ebe4d4;padding:2px 5px;border-radius:3px;word-break:break-all}
+/* slot */
+.end{padding:60px 0 70px}
+.end h2{font:400 clamp(32px,4.6vw,60px)/1.05 var(--serif);letter-spacing:-.025em;margin:0 0 24px;max-width:14em;text-wrap:balance}
+footer{border-top:1.5px solid var(--rule);padding:22px 0 50px;display:flex;flex-wrap:wrap;gap:18px 30px;justify-content:space-between;color:var(--ink-2);font-size:14px}
+footer a{color:inherit}
+@media(max-width:860px){
+  .hero{grid-template-columns:1fr;gap:18px}.sticker{justify-self:start;width:120px;order:-1}
+  .ch-head{grid-template-columns:1fr;gap:8px}
+  .facts,.prov,.anatomy ul{grid-template-columns:1fr}
+  .facts div,.prov div{border-right:0;border-bottom:1px solid #cfc8ba;padding-left:0!important}
+  .facts div:last-child,.prov div:last-child{border-bottom:0}
+  .how div{grid-template-columns:50px 1fr}.how p{grid-column:2}
+  .demo-foot{grid-template-columns:1fr}.controls{justify-content:flex-start}
+  .top nav{display:none}
+  .stage .chrome{font-size:9.5px;letter-spacing:.06em;padding:7px 10px}
+}
 @media(prefers-reduced-motion:reduce){*{transition-duration:.01ms!important;animation-duration:.01ms!important}}
 </style>
 </head>
@@ -155,16 +196,34 @@ footer a{color:var(--muted)}
   <p style="color:#888;font-size:14px">Alleen voor Macs met Sharelink - Finder.</p>
 </div>
 
-<header class="wrap">
-  <img src="icon.png" alt="">
-  <h1>Sharelink - Finder</h1>
-  <p>Stuur een collega een link naar een bestand in jullie gedeelde map. Bij hen opent precies dat bestand, in hun eigen Dropbox, Google Drive, Synology Drive of op de server.</p>
-  <a class="cta" href="https://github.com/gerbenhoogendam/sharelink-finder/releases">⬇︎ Download voor macOS</a>
-  <span class="sub">Gratis en open source · macOS 13 of nieuwer · beide kanten hebben de app nodig</span>
-</header>
+<div class="wrap">
+  <div class="top">
+    <a class="brand" href="/"><img src="icon.png" alt="">Sharelink - Finder</a>
+    <nav><a href="#demo">Demo</a><a href="#privacy">Gegevens</a><a href="#werkt">Werkt met</a><a href="https://github.com/gerbenhoogendam/sharelink-finder">GitHub</a></nav>
+  </div>
+  <hr class="rule">
 
-<section class="demo wrap" id="demo" aria-label="Demo">
-  <div class="stage"><div class="scene" id="scene"><div class="zoom" id="zoom">
+  <section class="hero">
+    <div>
+      <div class="mono">Voor teams met een gedeelde map op de Mac</div>
+      <h1>Een link naar een bestand. <em>Die bij je collega ook opent.</em></h1>
+      <p>Niet in een browser, niet als download, maar gewoon het bestand zelf, in <b>hun eigen</b> Dropbox, Google Drive, Synology Drive of op de server. <b>Geen upload, geen account, geen spoor.</b></p>
+      <div class="actions">
+        <a class="btn" href="https://github.com/gerbenhoogendam/sharelink-finder/releases">Download voor macOS →</a>
+        <a class="btn line" href="#demo">Bekijk de demo ↓</a>
+      </div>
+      <div class="mono meta">v1.0.1 · macOS 13 of nieuwer · gratis · open source · beide kanten installeren</div>
+    </div>
+    <img class="sticker" src="icon.png" alt="">
+  </section>
+</div>
+
+<div class="wrap"><hr class="rule"></div>
+<section class="ch wrap" id="demo">
+  <div class="ch-head"><div class="mono">01 — De demo</div><h2>Acht klikken, van jouw Finder naar die van je collega.</h2></div>
+  <div class="stage">
+    <div class="chrome"><span>Jij · G2O Dropbox</span><span>Anna · Dropbox via CloudStorage</span></div>
+    <div class="scene" id="scene"><div class="zoom" id="zoom">
     <div class="label l">Jij</div><div class="label r">Je collega Anna</div>
 
     <div class="screen s" id="screen-s">
@@ -209,7 +268,7 @@ footer a{color:var(--muted)}
       <div class="window browser" id="browser">
         <div class="bar"><i></i><i></i><i></i><b>Safari</b></div>
         <div class="url">🔒 share-link.nl/#folder/dropbox/Klanten/K/Kop of Munt/02_Website/…</div>
-        <div class="pg">Bestand wordt lokaal geopend<span class="dots" id="dots">…</span></div>
+        <div class="pg">Bestand wordt lokaal geopend…</div>
       </div>
       <div class="window finder r2" id="finder-r">
         <div class="bar"><i></i><i></i><i></i><b>02_Website</b></div>
@@ -227,52 +286,74 @@ footer a{color:var(--muted)}
     </div>
 
     <svg class="cursor" id="cursor" viewBox="0 0 24 24"><path d="M4 2l16 9-7 1.5L17 20l-3 1.5-4-7.5L5 19z" fill="#fff" stroke="#000" stroke-width="1.5" stroke-linejoin="round"/></svg>
-  </div></div></div>
-
-  <div class="caption" id="caption"></div>
-  <div class="controls">
-    <button class="btn ghost" id="prev">‹ Vorige</button>
-    <div class="dots" id="dots-nav"></div>
-    <button class="btn" id="next">Start de demo ›</button>
-    <label class="auto"><input type="checkbox" id="auto"> automatisch afspelen</label>
+    </div></div>
+  </div>
+  <div class="demo-foot">
+    <div class="caption" id="caption"></div>
+    <div class="controls">
+      <button class="ui" id="prev">‹ Vorige</button>
+      <span class="counter" id="counter">0 / 8</span>
+      <button class="ui primary" id="next">Start de demo ›</button>
+      <label class="auto"><input type="checkbox" id="auto"> auto</label>
+    </div>
   </div>
 </section>
 
-<section class="txt wrap">
-  <h2>Wat gebeurt er met je gegevens? Niets.</h2>
-  <p class="lead">Sharelink verstuurt geen bestanden, slaat niets op en houdt niets bij. Het is een technische omweg, meer niet.</p>
-  <div class="cards">
-    <div class="card"><div class="em">🔒</div><h3>Niets verlaat je organisatie</h3><p>De link bevat alleen het pad binnen jullie gedeelde map, zoals <code>Klanten/Kop of Munt/02_Website/…</code>. Het bestand zelf gaat nergens heen. Wie de map niet heeft, kan er ook niets mee.</p></div>
-    <div class="card"><div class="em">🙈</div><h3>Niets wordt gelogd</h3><p>Het pad staat achter het hekje in de link. Browsers sturen dat deel nooit naar een server, dus het bereikt share-link.nl niet eens. De pagina is één statisch bestand: geen database, geen analytics, geen cookies. Hooguit is te zien dát de pagina is geopend, zoals bij elke website; nooit welk bestand, welke map of door wie.</p></div>
-    <div class="card"><div class="em">🔧</div><h3>Puur een technische workaround</h3><p>macOS kan geen link maken die op een andere Mac werkt, omdat ieders gedeelde map ergens anders op schijf staat. Sharelink vertaalt de link op de Mac van de ontvanger naar diens eigen map. Dat is alles wat het doet, en de <a href="https://github.com/gerbenhoogendam/sharelink-finder">broncode</a> is openbaar.</p></div>
+<div class="wrap"><hr class="rule"></div>
+<section class="ch wrap" id="privacy">
+  <div class="ch-head"><div class="mono">02 — Wat er met je gegevens gebeurt</div>
+    <h2 class="state">Niets. Er gaat <mark>niets naar buiten</mark>, er wordt niets bewaard, en niemand kijkt mee.</h2></div>
+  <div class="facts">
+    <div><div class="mono">Geen upload</div><h3>Het bestand blijft waar het staat</h3><p>De link bevat alleen het pad binnen jullie gedeelde map. Het bestand zelf gaat nergens heen. Wie de map niet heeft, heeft aan de link niets.</p></div>
+    <div><div class="mono">Geen logboek</div><h3>Het pad bereikt de server nooit</h3><p>Het pad staat achter het hekje in de link, en dat deel stuurt een browser nooit mee. De pagina op share-link.nl is één statisch bestand: geen database, geen analytics, geen cookies. Hooguit is te zien dát de pagina is geopend, zoals bij elke website. Nooit welk bestand, welke map of door wie.</p></div>
+    <div><div class="mono">Geen magie</div><h3>Een technische omweg, meer niet</h3><p>macOS kan geen link maken die op een andere Mac werkt, omdat ieders gedeelde map ergens anders op schijf staat. Sharelink vertaalt het pad op de Mac van de ontvanger naar diens eigen map. Dat is alles, en de <a href="https://github.com/gerbenhoogendam/sharelink-finder">code staat open</a>.</p></div>
+  </div>
+  <div class="anatomy">
+    <div class="mono">Zo ziet een link eruit</div>
+    <div class="url"><span class="u1">https://share-link.nl/</span><span class="u2">#</span><span class="u3">folder/dropbox/Klanten/K/Kop%20of%20Munt/02_Website/KoM-logo-website-concept-V1.pdf</span></div>
+    <ul>
+      <li><b class="u1">De pagina</b><br>Eén statisch bestand dat de link doorgeeft aan de app en het tabblad sluit.</li>
+      <li><b class="u2">Het hekje</b><br>Alles hierna blijft in de browser. Het wordt niet verstuurd, dus het kan ook niet worden gelogd.</li>
+      <li><b class="u3">Het pad</b><br>Welke map, welk bestand, binnen jullie gedeelde map. Geen gebruikersnaam, geen schijflocatie.</li>
+    </ul>
   </div>
 </section>
 
-<section class="txt wrap">
-  <h2>Werkt met</h2>
-  <p class="lead">Elke gedeelde map waarvan de structuur bij jullie allemaal gelijk is.</p>
-  <div class="chips">
-    <span class="chip"><i style="background:#0061ff"></i>Dropbox, klassiek én File Provider</span>
-    <span class="chip"><i style="background:#34a853"></i>Google Drive</span>
-    <span class="chip"><i style="background:#f58220"></i>Synology Drive</span>
-    <span class="chip"><i style="background:#6b7a8c"></i>Servershares (SMB)</span>
-    <span class="chip no">OneDrive en lokale schijven: geen link</span>
+<div class="wrap"><hr class="rule"></div>
+<section class="ch wrap" id="werkt">
+  <div class="ch-head"><div class="mono">03 — Werkt met</div><h2>Elke gedeelde map die bij jullie allemaal dezelfde structuur heeft.</h2></div>
+  <div class="prov">
+    <div><i class="sw" style="background:#0061ff"></i><h3>Dropbox</h3><p>Klassiek in de homefolder én de nieuwe File Provider-versie onder CloudStorage. Teammappen en eigen mappen.</p></div>
+    <div><i class="sw" style="background:#34a853"></i><h3>Google Drive</h3><p>Mijn Drive en gedeelde drives. Taalonafhankelijk: een link van een Engelse Mac werkt op een Nederlandse.</p></div>
+    <div><i class="sw" style="background:#f58220"></i><h3>Synology Drive</h3><p>De synchronisatiemap van de Synology Drive Client, op de standaardlocatie.</p></div>
+    <div><i class="sw" style="background:#555"></i><h3>Servershares</h3><p>SMB-shares op een fileserver of NAS. Niet gemount? Dan mount de app hem eerst, met je eigen inloggegevens.</p></div>
+  </div>
+  <p class="prov-note">OneDrive en lokale schijven krijgen geen link. Verzender en ontvanger hebben de app allebei nodig.</p>
+</section>
+
+<div class="wrap"><hr class="rule"></div>
+<section class="ch wrap">
+  <div class="ch-head"><div class="mono">04 — Onder de motorkap</div><h2>Drie stappen, geen van alle bijzonder.</h2></div>
+  <div class="how">
+    <div><span class="n">1</span><h3>Jij maakt een link</h3><p>Sharelink kijkt in welke gedeelde map het bestand staat en maakt er een gewone https-link van, zoals <code>https://share-link.nl/#file/dropbox/Klanten/…</code>. Zo'n link is klikbaar in Mail, Outlook, Teams en WhatsApp.</p></div>
+    <div><span class="n">2</span><h3>De browser geeft door</h3><p>De pagina stuurt de link meteen door naar <code>sharelink://…</code>, het adres van de app op de Mac van de ontvanger, en sluit zichzelf zodra de app het overneemt.</p></div>
+    <div><span class="n">3</span><h3>De app opent het bestand</h3><p>Op die Mac zoekt Sharelink de eigen Dropbox-, Google Drive- of Synology-map, of mount de servershare, en opent het bestand of zet het klaar in Finder.</p></div>
   </div>
 </section>
 
-<section class="txt wrap">
-  <h2>Zo werkt het, technisch</h2>
-  <div class="steps">
-    <div><h3>Jij maakt een link</h3><p>Sharelink kijkt in welke gedeelde map het bestand staat en maakt er een gewone https-link van: <code>https://share-link.nl/#file/dropbox/Klanten/…</code>. Zo'n link is klikbaar in Mail, Outlook, Teams en WhatsApp.</p></div>
-    <div><h3>De browser geeft door</h3><p>De pagina op share-link.nl stuurt de link meteen door naar <code>sharelink://…</code>, het adres van de app op de Mac van de ontvanger, en sluit zichzelf.</p></div>
-    <div><h3>De app opent het bestand</h3><p>Op die Mac zoekt Sharelink de eigen Dropbox-, Google Drive- of Synology-map, of mount de servershare, en opent het bestand of zet het klaar in Finder.</p></div>
+<div class="wrap"><hr class="rule"></div>
+<section class="end wrap">
+  <h2>Installeer het op twee Macs en stuur de eerste link.</h2>
+  <div class="actions">
+    <a class="btn" href="https://github.com/gerbenhoogendam/sharelink-finder/releases">Download voor macOS →</a>
+    <a class="btn line" href="https://github.com/gerbenhoogendam/sharelink-finder">Broncode op GitHub</a>
   </div>
 </section>
 
-<footer class="wrap">
-  <a href="https://github.com/gerbenhoogendam/sharelink-finder/releases">Download</a> · <a href="https://github.com/gerbenhoogendam/sharelink-finder">GitHub</a> · MIT-licentie<br>
-  Voorwaarde: verzender en ontvanger hebben dezelfde mappenstructuur, bijvoorbeeld dezelfde teammappen in Dropbox.
-</footer>
+<div class="wrap"><footer>
+  <span>Sharelink - Finder · MIT-licentie · gesigneerd en genotariseerd voor macOS</span>
+  <span><a href="https://github.com/gerbenhoogendam/sharelink-finder/releases">Download</a> · <a href="https://github.com/gerbenhoogendam/sharelink-finder">GitHub</a></span>
+</footer></div>
 
 <script>
 (() => {
@@ -302,10 +383,10 @@ footer a{color:var(--muted)}
     zoom.style.transform = `translate(${tx}px, ${ty}px) scale(${s})`;
   }
   function zoomReset() { zoom.style.transform = 'none'; }
-  function moveCursor(el, dx = 0, dy = 0) {
+  function moveCursor(el) {
     const p = pos(el);
-    cursor.style.left = (p.x + p.w / 2 + dx) + 'px';
-    cursor.style.top = (p.y + p.h / 2 + dy) + 'px';
+    cursor.style.left = (p.x + p.w / 2) + 'px';
+    cursor.style.top = (p.y + p.h / 2) + 'px';
     cursor.classList.add('on');
   }
   function click() { cursor.classList.remove('click'); void cursor.offsetWidth; cursor.classList.add('click'); }
@@ -322,37 +403,36 @@ footer a{color:var(--muted)}
     finderR.classList.toggle('show', i >= 7); fileR.classList.toggle('sel', i >= 7);
     cursor.classList.remove('on');
   }
+  const views = [zoomReset, () => zoomTo(finderS), () => zoomTo(tray, 3.2), () => zoomTo(tray, 3.2), zoomReset, () => zoomTo(screenR, 1.05), () => zoomTo(screenR, 1.05), () => zoomTo(finderR), zoomReset];
   const steps = [
-    { cap: 'Links jij, rechts je collega Anna. Ieder met een eigen Mac en een eigen Dropbox-map.', sub: 'Klik op Start, of laat de demo automatisch afspelen.',
+    { cap: 'Links jij, rechts je collega Anna. Ieder een eigen Mac, ieder een eigen Dropbox-map.', sub: 'Klik op Start, of zet auto aan.',
       enter() { zoomReset(); } },
-    { cap: '1. Selecteer in Finder het bestand dat je wilt delen.', sub: 'Dit bestand staat in jullie teammap "Klanten".',
+    { cap: 'Selecteer in Finder het bestand dat je wilt delen.', sub: 'Dit bestand staat in jullie teammap Klanten.',
       enter() { zoomTo(finderS); moveCursor(fileS); later(() => { click(); fileS.classList.add('sel'); }, 900); } },
-    { cap: '2. Klik op het Sharelink-icoon in de menubalk en kies “Link map & bestand”.', sub: 'Het icoon van Dropbox laat zien waar het bestand staat.',
+    { cap: 'Klik op het Sharelink-icoon in de menubalk en kies “Link map & bestand”.', sub: 'Het icoon ervoor laat zien waar het bestand staat: Dropbox.',
       enter() { zoomTo(tray, 3.2); moveCursor(slIcon); later(() => { click(); menu.classList.add('open'); }, 900); later(() => moveCursor(menuBoth), 1300); later(() => { menuBoth.classList.add('hover'); }, 1900); } },
-    { cap: '3. Klaar: de link staat op je klembord.', sub: 'Er is nog niets verstuurd. Nergens heen.',
+    { cap: 'Klaar: de link staat op je klembord.', sub: 'Er is nog niets verstuurd. Nergens heen.',
       enter() { click(); later(() => { menu.classList.remove('open'); menuBoth.classList.remove('hover'); toast.classList.add('show'); }, 250); later(() => toast.classList.remove('show'), 2400); } },
-    { cap: '4. Plak de link in een mail of bericht aan Anna en verstuur.', sub: 'Gewone https-link, dus klikbaar in Mail, Outlook, Teams en WhatsApp.',
+    { cap: 'Plak de link in een mail of bericht aan Anna en verstuur.', sub: 'Een gewone https-link, dus klikbaar in Mail, Outlook, Teams en WhatsApp.',
       enter() { zoomReset(); compose.classList.add('show'); later(() => compose.classList.add('sent'), 1700); later(() => mailR.classList.add('show'), 2400); } },
-    { cap: '5. Anna klikt op de link.', sub: '',
+    { cap: 'Anna klikt op de link.', sub: '',
       enter() { zoomTo(screenR, 1.05); compose.classList.remove('show', 'sent'); mailR.classList.add('show'); moveCursor(mailLink); later(() => { click(); mailLink.classList.add('clicked'); }, 1000); } },
-    { cap: '6. Haar browser opent heel even… en sluit vanzelf weer.', sub: 'Het pad achter het hekje gaat nooit naar een server.', auto: 2600,
+    { cap: 'Haar browser opent heel even… en sluit vanzelf weer.', sub: 'Het pad achter het hekje gaat nooit naar een server.', auto: 2600,
       enter() { cursor.classList.remove('on'); browser.classList.add('show'); later(() => browser.classList.remove('show'), 1700); } },
-    { cap: '7. Finder springt naar de juiste map, in háár eigen Dropbox, met het bestand al geselecteerd.', sub: 'Bij jou staat die map in "G2O Dropbox", bij haar onder "CloudStorage". Zelfde teammap, andere plek op schijf.',
+    { cap: 'Finder springt naar de juiste map, in háár eigen Dropbox, met het bestand al geselecteerd.', sub: 'Bij jou staat de map in G2O Dropbox, bij haar onder CloudStorage. Zelfde teammap, andere plek op schijf.',
       enter() { finderR.classList.add('show'); zoomTo(finderR); later(() => fileR.classList.add('sel'), 700); } },
     { cap: 'Dat is alles. Geen upload, geen account, geen spoor.', sub: 'Nog een keer kijken?', last: true,
       enter() { zoomReset(); } },
   ];
 
-  const nav = $('dots-nav'), caption = $('caption'), next = $('next'), prev = $('prev'), auto = $('auto');
-  steps.forEach((_, i) => { const b = document.createElement('button'); b.setAttribute('aria-label', 'Stap ' + i); b.onclick = () => go(i, false); nav.appendChild(b); });
-
+  const caption = $('caption'), next = $('next'), prev = $('prev'), auto = $('auto'), counter = $('counter');
   function go(i, animate = true) {
     clearTimers(); clearTimeout(autoTimer);
     cur = Math.max(0, Math.min(steps.length - 1, i));
     base(animate ? cur - 1 : cur);
-    if (animate) steps[cur].enter(); else { base(cur); [zoomReset, () => zoomTo(finderS), () => zoomTo(tray, 3.2), () => zoomTo(tray, 3.2), zoomReset, () => zoomTo(screenR, 1.05), () => zoomTo(screenR, 1.05), () => zoomTo(finderR), zoomReset][cur](); }
+    if (animate) steps[cur].enter(); else { base(cur); views[cur](); }
     caption.innerHTML = steps[cur].cap + (steps[cur].sub ? '<small>' + steps[cur].sub + '</small>' : '');
-    [...nav.children].forEach((b, k) => b.classList.toggle('on', k === cur));
+    counter.textContent = cur + ' / ' + (steps.length - 1);
     next.textContent = cur === 0 ? 'Start de demo ›' : steps[cur].last ? '↻ Opnieuw' : 'Volgende ›';
     prev.disabled = cur === 0;
     const wait = steps[cur].auto || (auto.checked && !steps[cur].last ? 3400 : 0);
@@ -361,7 +441,7 @@ footer a{color:var(--muted)}
   next.onclick = () => go(steps[cur].last ? 0 : cur + 1);
   prev.onclick = () => go(cur - 1, false);
   auto.onchange = () => { if (auto.checked && !steps[cur].last) autoTimer = setTimeout(() => go(cur + 1), 1200); else clearTimeout(autoTimer); };
-  document.addEventListener('keydown', e => { if (e.key === 'ArrowRight') next.onclick(); if (e.key === 'ArrowLeft' && cur > 0) prev.onclick(); });
+  document.addEventListener('keydown', e => { if (e.target.tagName === 'INPUT') return; if (e.key === 'ArrowRight') next.onclick(); if (e.key === 'ArrowLeft' && cur > 0) prev.onclick(); });
   addEventListener('resize', () => go(cur, false));
   go(0, false);
 })();
