@@ -222,7 +222,7 @@ footer a{color:inherit}
 <section class="ch wrap" id="demo">
   <div class="ch-head"><div class="mono">01 — De demo</div><h2>Acht klikken, van jouw Finder naar die van je collega.</h2></div>
   <div class="stage">
-    <div class="chrome"><span>Jij · G2O Dropbox</span><span>Anna · Dropbox via CloudStorage</span></div>
+    <div class="chrome"><span>Demo · twee Macs, één teammap</span><span>share-link.nl</span></div>
     <div class="scene" id="scene"><div class="zoom" id="zoom">
     <div class="label l">Jij</div><div class="label r">Je collega Anna</div>
 
@@ -232,15 +232,15 @@ footer a{color:inherit}
       </div>
       <div class="menu" id="menu">
         <div><span class="badge">D</span>Link bestand</div>
-        <div><span class="badge">D</span>Link map</div>
-        <div id="menu-both"><span class="badge">D</span>Link map &amp; bestand</div>
+        <div id="menu-map"><span class="badge">D</span>Link map</div>
+        <div><span class="badge">D</span>Link map &amp; bestand</div>
         <div class="sep"></div>
         <div>Stoppen</div>
       </div>
       <div class="window finder" id="finder-s">
         <div class="bar"><i></i><i></i><i></i><b>02_Website</b></div>
         <div class="body">
-          <div class="side"><h6>Favorieten</h6><div>Recent</div><div>Bureaublad</div><div>Downloads</div><h6>Locaties</h6><div class="on">G2O Dropbox</div></div>
+          <div class="side"><h6>Favorieten</h6><div>Recent</div><div>Bureaublad</div><div>Downloads</div><h6>Locaties</h6><div class="on">Studio Dropbox</div></div>
           <div class="list">
             <div class="row"><span class="ic fld"></span>Concepten</div>
             <div class="row" id="file-s"><span class="ic pdf"></span>KoM-logo-website-concept-V1.pdf</div>
@@ -248,7 +248,7 @@ footer a{color:inherit}
             <div class="row"><span class="ic"></span>Offerte-website.docx</div>
           </div>
         </div>
-        <div class="path"><b>G2O Dropbox</b> › Klanten › K › Kop of Munt › <b>02_Website</b></div>
+        <div class="path"><b>Studio Dropbox</b> › Klanten › K › Kop of Munt › <b>02_Website</b></div>
       </div>
       <div class="toast" id="toast"><b>✓</b> Link gekopieerd</div>
       <div class="compose" id="compose">
@@ -359,7 +359,7 @@ footer a{color:inherit}
 (() => {
   const $ = id => document.getElementById(id);
   const zoom = $('zoom'), scene = $('scene'), cursor = $('cursor');
-  const fileS = $('file-s'), menu = $('menu'), menuBoth = $('menu-both'), toast = $('toast'), compose = $('compose');
+  const fileS = $('file-s'), menu = $('menu'), menuBoth = $('menu-map'), toast = $('toast'), compose = $('compose');
   const mailR = $('mail-r'), mailLink = $('mail-link'), browser = $('browser'), finderR = $('finder-r'), fileR = $('file-r');
   const finderS = $('finder-s'), tray = $('tray'), slIcon = $('sl-icon'), screenR = $('screen-r');
   let cur = 0, timers = [], autoTimer = null;
@@ -409,7 +409,7 @@ footer a{color:inherit}
       enter() { zoomReset(); } },
     { cap: 'Selecteer in Finder het bestand dat je wilt delen.', sub: 'Dit bestand staat in jullie teammap Klanten.',
       enter() { zoomTo(finderS); moveCursor(fileS); later(() => { click(); fileS.classList.add('sel'); }, 900); } },
-    { cap: 'Klik op het Sharelink-icoon in de menubalk en kies “Link map & bestand”.', sub: 'Het icoon ervoor laat zien waar het bestand staat: Dropbox.',
+    { cap: 'Klik op het Sharelink-icoon in de menubalk en kies “Link map”.', sub: 'Een maplink zet het bestand bij de ontvanger klaar in Finder. Het icoon ervoor zegt waar het staat: Dropbox.',
       enter() { zoomTo(tray, 3.2); moveCursor(slIcon); later(() => { click(); menu.classList.add('open'); }, 900); later(() => moveCursor(menuBoth), 1300); later(() => { menuBoth.classList.add('hover'); }, 1900); } },
     { cap: 'Klaar: de link staat op je klembord.', sub: 'Er is nog niets verstuurd. Nergens heen.',
       enter() { click(); later(() => { menu.classList.remove('open'); menuBoth.classList.remove('hover'); toast.classList.add('show'); }, 250); later(() => toast.classList.remove('show'), 2400); } },
@@ -419,7 +419,7 @@ footer a{color:inherit}
       enter() { zoomTo(screenR, 1.05); compose.classList.remove('show', 'sent'); mailR.classList.add('show'); moveCursor(mailLink); later(() => { click(); mailLink.classList.add('clicked'); }, 1000); } },
     { cap: 'Haar browser opent heel even… en sluit vanzelf weer.', sub: 'Het pad achter het hekje gaat nooit naar een server.', auto: 2600,
       enter() { cursor.classList.remove('on'); browser.classList.add('show'); later(() => browser.classList.remove('show'), 1700); } },
-    { cap: 'Finder springt naar de juiste map, in háár eigen Dropbox, met het bestand al geselecteerd.', sub: 'Bij jou staat de map in G2O Dropbox, bij haar onder CloudStorage. Zelfde teammap, andere plek op schijf.',
+    { cap: 'Finder springt naar de juiste map, in háár eigen Dropbox, met het bestand al geselecteerd.', sub: 'Bij jou staat de map in Studio Dropbox, bij haar onder CloudStorage. Zelfde teammap, andere plek op schijf.',
       enter() { finderR.classList.add('show'); zoomTo(finderR); later(() => fileR.classList.add('sel'), 700); } },
     { cap: 'Dat is alles. Geen upload, geen account, geen spoor.', sub: 'Nog een keer kijken?', last: true,
       enter() { zoomReset(); } },
