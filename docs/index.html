@@ -222,9 +222,9 @@ footer a{color:inherit}
 <section class="ch wrap" id="demo">
   <div class="ch-head"><div class="mono">01 — De demo</div><h2>Acht klikken, van jouw Finder naar die van je collega.</h2></div>
   <div class="stage">
-    <div class="chrome"><span>Demo · twee Macs, één teammap</span><span>share-link.nl</span></div>
+    <div class="chrome"><span>Jouw computer</span><span>Anna’s computer</span></div>
     <div class="scene" id="scene"><div class="zoom" id="zoom">
-    <div class="label l">Jij</div><div class="label r">Je collega Anna</div>
+    <div class="label l">Jouw computer</div><div class="label r">Anna’s computer</div>
 
     <div class="screen s" id="screen-s">
       <div class="menubar"><span class="apple"></span>Finder<span class="sp"></span>
@@ -405,7 +405,7 @@ footer a{color:inherit}
   }
   const views = [zoomReset, () => zoomTo(finderS), () => zoomTo(tray, 3.2), () => zoomTo(tray, 3.2), zoomReset, () => zoomTo(screenR, 1.05), () => zoomTo(screenR, 1.05), () => zoomTo(finderR), zoomReset];
   const steps = [
-    { cap: 'Links jij, rechts je collega Anna. Ieder een eigen Mac, ieder een eigen Dropbox-map.', sub: 'Klik op Start, of zet auto aan.',
+    { cap: 'Links jouw computer, rechts die van je collega Anna. Ieder een eigen Dropbox-map.', sub: 'Klik op Start, of zet auto aan.',
       enter() { zoomReset(); } },
     { cap: 'Selecteer in Finder het bestand dat je wilt delen.', sub: 'Dit bestand staat in jullie teammap Klanten.',
       enter() { zoomTo(finderS); moveCursor(fileS); later(() => { click(); fileS.classList.add('sel'); }, 900); } },
