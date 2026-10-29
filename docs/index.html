@@ -81,7 +81,23 @@ html.redirect #redirect{display:block}
 .menu div{display:flex;align-items:center;gap:.5em;padding:.35em .7em;border-radius:.4em}
 .menu div.hover{background:#1f7cf0;color:#fff}
 .menu .sep{height:1px;background:#d6dbe3;margin:.3em .5em;padding:0}
-.badge{display:inline-grid;place-items:center;width:1.25em;height:1.25em;border-radius:.3em;font-size:.8em;font-weight:800;color:#fff;background:#0061ff}
+.menu .pi{width:1.25em;height:1.25em;border-radius:.3em}
+.compose.problem{top:12%}
+.shot{margin-top:.6em;border:1px solid #c9ccd3;border-radius:.3em;padding:.4em .6em;background:#f6f6f8;font-size:.85em;color:#444;box-shadow:0 .3em .8em rgba(0,0,0,.18);transform:rotate(-1.5deg);display:inline-block}
+.shotname{font-size:.7em;color:#888;margin-top:.35em}
+.promise{position:absolute;inset:6%;background:#f6f1e7;color:#141414;padding:2em 2.4em;opacity:0;transform:scale(.96);transition:.5s;pointer-events:none;z-index:30;display:flex;flex-direction:column;justify-content:center;gap:.9em;font-size:max(1em,9px)}
+.promise.show{opacity:1;transform:none}
+.p-head{font:400 2.4em/1.05 var(--serif);letter-spacing:-.02em}
+.p-head em{color:#1d5fd1;font-style:italic}
+.p-works{font:600 .85em var(--mono);letter-spacing:.14em;text-transform:uppercase;color:#4d4a44}
+.p-row{display:flex;gap:1.8em;flex-wrap:wrap}
+.p-row div{display:flex;align-items:center;gap:.6em;font-weight:600;font-size:1.05em}
+.p-row img{width:2.8em;height:2.8em}
+.p-no{display:flex;align-items:center;gap:1.4em;border-top:1px solid #cfc8ba;padding-top:.9em;flex-wrap:wrap}
+.p-no p{margin:0;font:italic 1em/1.35 var(--serif);color:#4d4a44;max-width:28em}
+.strike{position:relative;display:inline-flex;align-items:center;gap:.6em;font-weight:600;font-size:1.05em}
+.strike img{width:2.8em;height:2.8em}
+.strike::after{content:"";position:absolute;left:-.3em;right:-.3em;top:50%;height:.2em;background:#d6281a;transform:rotate(-12deg);border-radius:.2em}
 .window{position:absolute;background:#fff;border-radius:.7em;box-shadow:0 .8em 2em rgba(0,0,0,.35);overflow:hidden;transition:opacity .4s,transform .4s}
 .window .bar{height:2.1em;background:linear-gradient(#f3f3f5,#e6e6ea);display:flex;align-items:center;gap:.45em;padding:0 .7em;font-size:.9em;color:#555;border-bottom:1px solid #d6d6db}
 .window .bar i{width:.85em;height:.85em;border-radius:50%;display:inline-block}
@@ -159,7 +175,11 @@ html.redirect #redirect{display:block}
 .prov div{padding:22px 20px 24px 0;border-right:1px solid #cfc8ba}
 .prov div:last-child{border-right:0}
 .prov div+div{padding-left:20px}
-.prov .sw{width:14px;height:14px;display:inline-block;margin-bottom:12px}
+.prov .pic{width:56px;height:56px;margin-bottom:12px}
+.nope{display:flex;align-items:center;gap:28px;margin-top:28px;padding:22px 26px;border:2px solid var(--ink);background:#fffdf8;flex-wrap:wrap}
+.nope .strike{font-size:20px}
+.nope p{margin:0;font:italic 20px/1.35 var(--serif);max-width:30em}
+.nope p .mono{display:block;font-style:normal;margin-top:8px}
 .prov h3{font:600 17px var(--sans);margin:0 0 4px}
 .prov p{margin:0;color:var(--ink-2);font-size:15px}
 .prov-note{margin:18px 0 0;color:var(--ink-2);font-size:15px}
@@ -185,6 +205,7 @@ footer a{color:inherit}
   .demo-foot{grid-template-columns:1fr}.controls{justify-content:flex-start}
   .top nav{display:none}
   .stage .chrome{font-size:9.5px;letter-spacing:.06em;padding:7px 10px}
+  .promise{inset:3%;padding:.9em 1em;gap:.45em}.p-head{font-size:1.7em}.p-row{gap:.9em}.p-row img,.strike img{width:2em;height:2em}.p-no{gap:.8em;padding-top:.5em}
 }
 @media(prefers-reduced-motion:reduce){*{transition-duration:.01ms!important;animation-duration:.01ms!important}}
 </style>
@@ -220,7 +241,7 @@ footer a{color:inherit}
 
 <div class="wrap"><hr class="rule"></div>
 <section class="ch wrap" id="demo">
-  <div class="ch-head"><div class="mono">01 — De demo</div><h2>Acht klikken, van jouw Finder naar die van je collega.</h2></div>
+  <div class="ch-head"><div class="mono">01 — De demo</div><h2>Negen stappen, van het probleem naar de map van je collega.</h2></div>
   <div class="stage">
     <div class="chrome"><span>Jouw computer</span><span>Anna’s computer</span></div>
     <div class="scene" id="scene"><div class="zoom" id="zoom">
@@ -231,30 +252,37 @@ footer a{color:inherit}
         <span class="tray" id="tray"><img class="sl" id="sl-icon" src="menubar.png" alt=""><span class="i"></span><span class="i"></span><span class="clock">14:02</span></span>
       </div>
       <div class="menu" id="menu">
-        <div><span class="badge">D</span>Link bestand</div>
-        <div id="menu-map"><span class="badge">D</span>Link map</div>
-        <div><span class="badge">D</span>Link map &amp; bestand</div>
+        <div><img class="pi" src="img/dropbox.png" alt="">Link bestand</div>
+        <div id="menu-map"><img class="pi" src="img/dropbox.png" alt="">Link map</div>
+        <div><img class="pi" src="img/dropbox.png" alt="">Link map &amp; bestand</div>
         <div class="sep"></div>
         <div>Stoppen</div>
       </div>
       <div class="window finder" id="finder-s">
-        <div class="bar"><i></i><i></i><i></i><b>02_Website</b></div>
+        <div class="bar"><i></i><i></i><i></i><b>Website</b></div>
         <div class="body">
-          <div class="side"><h6>Favorieten</h6><div>Recent</div><div>Bureaublad</div><div>Downloads</div><h6>Locaties</h6><div class="on">Studio Dropbox</div></div>
+          <div class="side"><h6>Favorieten</h6><div>Recent</div><div>Bureaublad</div><div>Downloads</div><h6>Locaties</h6><div class="on">Dropbox</div></div>
           <div class="list">
-            <div class="row"><span class="ic fld"></span>Concepten</div>
-            <div class="row" id="file-s"><span class="ic pdf"></span>KoM-logo-website-concept-V1.pdf</div>
-            <div class="row"><span class="ic pdf"></span>KoM-huisstijl.pdf</div>
-            <div class="row"><span class="ic"></span>Offerte-website.docx</div>
+            <div class="row"><span class="ic fld"></span>Oud</div>
+            <div class="row"><span class="ic pdf"></span>website-v01.pdf</div>
+            <div class="row"><span class="ic pdf"></span>website-v02.pdf</div>
+            <div class="row" id="file-s"><span class="ic pdf"></span>website-v03.pdf</div>
           </div>
         </div>
-        <div class="path"><b>Studio Dropbox</b> › Klanten › K › Kop of Munt › <b>02_Website</b></div>
+        <div class="path">gerben › <b>Dropbox</b> › Projecten › Acme Corp › <b>Website</b></div>
       </div>
       <div class="toast" id="toast"><b>✓</b> Link gekopieerd</div>
+      <div class="compose problem" id="problem">
+        <div class="to">Aan: Anna &nbsp;·&nbsp; Onderwerp: Website</div>
+        <div>Hoi Anna, de juiste versie staat in Dropbox, Projecten, Acme Corp, Website.. en dan denk ik versie 03. Zie screenshot:</div>
+        <div class="shot">📁 Dropbox › Projecten › Acme Corp › Website</div>
+        <div class="shotname">Schermafbeelding 2026-10-29 om 14.01.png</div>
+        <div class="send"><span>Verstuur ➤</span></div>
+      </div>
       <div class="compose" id="compose">
-        <div class="to">Aan: Anna &nbsp;·&nbsp; Onderwerp: KoM website concept</div>
-        <div>Hoi Anna, hier het logo-concept:</div>
-        <div class="link">Map: https://share-link.nl/#folder/dropbox/Klanten/K/Kop%20of%20Munt/02_Website/KoM-logo-website-concept-V1.pdf</div>
+        <div class="to">Aan: Anna &nbsp;·&nbsp; Onderwerp: Website, versie 03</div>
+        <div>Hoi Anna, hier de juiste versie:</div>
+        <div class="link">Map: https://share-link.nl/#folder/dropbox/Projecten/Acme%20Corp/Website/website-v03.pdf</div>
         <div class="send"><span>Verstuur ➤</span></div>
       </div>
     </div>
@@ -262,37 +290,49 @@ footer a{color:inherit}
     <div class="screen r" id="screen-r">
       <div class="menubar"><span class="apple"></span>Mail<span class="sp"></span><span class="tray"><img class="sl" src="menubar.png" alt=""><span class="i"></span><span class="i"></span><span class="clock">14:03</span></span></div>
       <div class="window mail" id="mail-r">
-        <div class="bar"><i></i><i></i><i></i><b>KoM website concept</b></div>
-        <div class="msg"><div class="hd">Van: jij &nbsp;·&nbsp; Aan: Anna</div>Hoi Anna, hier het logo-concept:<br>Map: <a id="mail-link">https://share-link.nl/#folder/dropbox/Klanten/K/Kop%20of%20Munt/02_Website/…</a></div>
+        <div class="bar"><i></i><i></i><i></i><b>Website, versie 03</b></div>
+        <div class="msg"><div class="hd">Van: jij &nbsp;·&nbsp; Aan: Anna</div>Hoi Anna, hier de juiste versie:<br>Map: <a id="mail-link">https://share-link.nl/#folder/dropbox/Projecten/Acme%20Corp/Website/website-v03.pdf</a></div>
       </div>
       <div class="window browser" id="browser">
         <div class="bar"><i></i><i></i><i></i><b>Safari</b></div>
-        <div class="url">🔒 share-link.nl/#folder/dropbox/Klanten/K/Kop of Munt/02_Website/…</div>
+        <div class="url">🔒 share-link.nl/#folder/dropbox/Projecten/Acme Corp/Website/…</div>
         <div class="pg">Bestand wordt lokaal geopend…</div>
       </div>
       <div class="window finder r2" id="finder-r">
-        <div class="bar"><i></i><i></i><i></i><b>02_Website</b></div>
+        <div class="bar"><i></i><i></i><i></i><b>Website</b></div>
         <div class="body">
           <div class="side"><h6>Favorieten</h6><div>Recent</div><div>Bureaublad</div><div>Downloads</div><h6>Locaties</h6><div class="on">Dropbox</div></div>
           <div class="list">
-            <div class="row"><span class="ic fld"></span>Concepten</div>
-            <div class="row" id="file-r"><span class="ic pdf"></span>KoM-logo-website-concept-V1.pdf</div>
-            <div class="row"><span class="ic pdf"></span>KoM-huisstijl.pdf</div>
-            <div class="row"><span class="ic"></span>Offerte-website.docx</div>
+            <div class="row"><span class="ic fld"></span>Oud</div>
+            <div class="row"><span class="ic pdf"></span>website-v01.pdf</div>
+            <div class="row"><span class="ic pdf"></span>website-v02.pdf</div>
+            <div class="row" id="file-r"><span class="ic pdf"></span>website-v03.pdf</div>
           </div>
         </div>
-        <div class="path">anna › Library › CloudStorage › <span class="hl">Dropbox</span> › Klanten › K › Kop of Munt › <b>02_Website</b></div>
+        <div class="path">anna › Library › CloudStorage › <span class="hl">Dropbox</span> › Projecten › Acme Corp › <b>Website</b></div>
       </div>
     </div>
 
     <svg class="cursor" id="cursor" viewBox="0 0 24 24"><path d="M4 2l16 9-7 1.5L17 20l-3 1.5-4-7.5L5 19z" fill="#fff" stroke="#000" stroke-width="1.5" stroke-linejoin="round"/></svg>
-    </div></div>
+    </div>
+    <div class="promise" id="promise">
+      <div class="p-head">Dit is verleden tijd met <em>Sharelink - Finder</em> voor Mac!</div>
+      <div class="p-works">Werkt voor</div>
+      <div class="p-row">
+        <div><img src="img/fileserver.png" alt=""><span>Fileserver</span></div>
+        <div><img src="img/gdrive.png" alt=""><span>Google Drive</span></div>
+        <div><img src="img/dropbox.png" alt=""><span>Dropbox</span></div>
+        <div><img src="img/synology.png" alt=""><span>Synology Drive</span></div>
+      </div>
+      <div class="p-no"><span class="strike"><img src="img/onedrive.png" alt=""><span>OneDrive</span></span><p>“OneDrive's synchronisatiemethode(n) zijn een puinhoop. Blijf hier maar gewoon heel ver vandaan.”</p></div>
+    </div>
+    </div>
   </div>
   <div class="demo-foot">
     <div class="caption" id="caption"></div>
     <div class="controls">
       <button class="ui" id="prev">‹ Vorige</button>
-      <span class="counter" id="counter">0 / 8</span>
+      <span class="counter" id="counter">0 / 9</span>
       <button class="ui primary" id="next">Start de demo ›</button>
       <label class="auto"><input type="checkbox" id="auto"> auto</label>
     </div>
@@ -310,7 +350,7 @@ footer a{color:inherit}
   </div>
   <div class="anatomy">
     <div class="mono">Zo ziet een link eruit</div>
-    <div class="url"><span class="u1">https://share-link.nl/</span><span class="u2">#</span><span class="u3">folder/dropbox/Klanten/K/Kop%20of%20Munt/02_Website/KoM-logo-website-concept-V1.pdf</span></div>
+    <div class="url"><span class="u1">https://share-link.nl/</span><span class="u2">#</span><span class="u3">folder/dropbox/Projecten/Acme%20Corp/Website/website-v03.pdf</span></div>
     <ul>
       <li><b class="u1">De pagina</b><br>Eén statisch bestand dat de link doorgeeft aan de app en het tabblad sluit.</li>
       <li><b class="u2">Het hekje</b><br>Alles hierna blijft in de browser. Het wordt niet verstuurd, dus het kan ook niet worden gelogd.</li>
@@ -323,19 +363,20 @@ footer a{color:inherit}
 <section class="ch wrap" id="werkt">
   <div class="ch-head"><div class="mono">03 — Werkt met</div><h2>Elke gedeelde map die bij jullie allemaal dezelfde structuur heeft.</h2></div>
   <div class="prov">
-    <div><i class="sw" style="background:#0061ff"></i><h3>Dropbox</h3><p>Klassiek in de homefolder én de nieuwe File Provider-versie onder CloudStorage. Teammappen en eigen mappen.</p></div>
-    <div><i class="sw" style="background:#34a853"></i><h3>Google Drive</h3><p>Mijn Drive en gedeelde drives. Taalonafhankelijk: een link van een Engelse Mac werkt op een Nederlandse.</p></div>
-    <div><i class="sw" style="background:#f58220"></i><h3>Synology Drive</h3><p>De synchronisatiemap van de Synology Drive Client, op de standaardlocatie.</p></div>
-    <div><i class="sw" style="background:#555"></i><h3>Servershares</h3><p>SMB-shares op een fileserver of NAS. Niet gemount? Dan mount de app hem eerst, met je eigen inloggegevens.</p></div>
+    <div><img class="pic" src="img/fileserver.png" alt=""><h3>Fileserver</h3><p>SMB-shares op een fileserver of NAS. Niet gemount? Dan mount de app hem eerst, met je eigen inloggegevens.</p></div>
+    <div><img class="pic" src="img/gdrive.png" alt=""><h3>Google Drive</h3><p>Mijn Drive en gedeelde drives. Taalonafhankelijk: een link van een Engelse Mac werkt op een Nederlandse.</p></div>
+    <div><img class="pic" src="img/dropbox.png" alt=""><h3>Dropbox</h3><p>Klassiek in de homefolder én de nieuwe File Provider-versie onder CloudStorage. Teammappen en eigen mappen.</p></div>
+    <div><img class="pic" src="img/synology.png" alt=""><h3>Synology Drive</h3><p>De synchronisatiemap van de Synology Drive Client, op de standaardlocatie.</p></div>
   </div>
-  <p class="prov-note">OneDrive en lokale schijven krijgen geen link. Verzender en ontvanger hebben de app allebei nodig.</p>
+  <div class="nope"><span class="strike"><img src="img/onedrive.png" alt=""><span>OneDrive</span></span><p>“OneDrive's synchronisatiemethode(n) zijn een puinhoop. Blijf hier maar gewoon heel ver vandaan.”<span class="mono">Geen link, met opzet</span></p></div>
+  <p class="prov-note">Lokale schijven krijgen ook geen link. Verzender en ontvanger hebben de app allebei nodig.</p>
 </section>
 
 <div class="wrap"><hr class="rule"></div>
 <section class="ch wrap">
   <div class="ch-head"><div class="mono">04 — Onder de motorkap</div><h2>Drie stappen, geen van alle bijzonder.</h2></div>
   <div class="how">
-    <div><span class="n">1</span><h3>Jij maakt een link</h3><p>Sharelink kijkt in welke gedeelde map het bestand staat en maakt er een gewone https-link van, zoals <code>https://share-link.nl/#file/dropbox/Klanten/…</code>. Zo'n link is klikbaar in Mail, Outlook, Teams en WhatsApp.</p></div>
+    <div><span class="n">1</span><h3>Jij maakt een link</h3><p>Sharelink kijkt in welke gedeelde map het bestand staat en maakt er een gewone https-link van, zoals <code>https://share-link.nl/#file/dropbox/Projecten/…</code>. Zo'n link is klikbaar in Mail, Outlook, Teams en WhatsApp.</p></div>
     <div><span class="n">2</span><h3>De browser geeft door</h3><p>De pagina stuurt de link meteen door naar <code>sharelink://…</code>, het adres van de app op de Mac van de ontvanger, en sluit zichzelf zodra de app het overneemt.</p></div>
     <div><span class="n">3</span><h3>De app opent het bestand</h3><p>Op die Mac zoekt Sharelink de eigen Dropbox-, Google Drive- of Synology-map, of mount de servershare, en opent het bestand of zet het klaar in Finder.</p></div>
   </div>
@@ -359,9 +400,9 @@ footer a{color:inherit}
 (() => {
   const $ = id => document.getElementById(id);
   const zoom = $('zoom'), scene = $('scene'), cursor = $('cursor');
-  const fileS = $('file-s'), menu = $('menu'), menuBoth = $('menu-map'), toast = $('toast'), compose = $('compose');
+  const fileS = $('file-s'), menu = $('menu'), menuMap = $('menu-map'), toast = $('toast'), compose = $('compose');
   const mailR = $('mail-r'), mailLink = $('mail-link'), browser = $('browser'), finderR = $('finder-r'), fileR = $('file-r');
-  const finderS = $('finder-s'), tray = $('tray'), slIcon = $('sl-icon'), screenR = $('screen-r');
+  const finderS = $('finder-s'), tray = $('tray'), slIcon = $('sl-icon'), screenR = $('screen-r'), screenS = $('screen-s'), problem = $('problem'), promise = $('promise');
   let cur = 0, timers = [], autoTimer = null;
   const later = (fn, ms) => timers.push(setTimeout(fn, ms));
   const clearTimers = () => { timers.forEach(clearTimeout); timers = []; };
@@ -393,33 +434,37 @@ footer a{color:inherit}
 
   // Eindtoestand van stap i, zonder animatie (voor terugspringen).
   function base(i) {
-    fileS.classList.toggle('sel', i >= 1);
-    menu.classList.toggle('open', i === 2); menuBoth.classList.toggle('hover', i === 2);
+    problem.classList.toggle('show', i === 0);
+    promise.classList.toggle('show', i === 1);
+    fileS.classList.toggle('sel', i >= 2);
+    menu.classList.toggle('open', i === 3); menuMap.classList.toggle('hover', i === 3);
     toast.classList.remove('show');
-    compose.classList.toggle('show', i === 4); compose.classList.remove('sent');
-    mailR.classList.toggle('show', i >= 5);
-    mailLink.classList.toggle('clicked', i >= 5);
-    browser.classList.toggle('show', i === 6);
-    finderR.classList.toggle('show', i >= 7); fileR.classList.toggle('sel', i >= 7);
+    compose.classList.toggle('show', i === 5); compose.classList.remove('sent');
+    mailR.classList.toggle('show', i >= 6);
+    mailLink.classList.toggle('clicked', i >= 6);
+    browser.classList.toggle('show', i === 7);
+    finderR.classList.toggle('show', i >= 8); fileR.classList.toggle('sel', i >= 8);
     cursor.classList.remove('on');
   }
-  const views = [zoomReset, () => zoomTo(finderS), () => zoomTo(tray, 3.2), () => zoomTo(tray, 3.2), zoomReset, () => zoomTo(screenR, 1.05), () => zoomTo(screenR, 1.05), () => zoomTo(finderR), zoomReset];
+  const views = [() => zoomTo(screenS, 1.05), zoomReset, () => zoomTo(finderS), () => zoomTo(tray, 3.2), () => zoomTo(tray, 3.2), zoomReset, () => zoomTo(screenR, 1.05), () => zoomTo(screenR, 1.05), () => zoomTo(finderR), zoomReset];
   const steps = [
-    { cap: 'Links jouw computer, rechts die van je collega Anna. Ieder een eigen Dropbox-map.', sub: 'Klik op Start, of zet auto aan.',
-      enter() { zoomReset(); } },
-    { cap: 'Selecteer in Finder het bestand dat je wilt delen.', sub: 'Dit bestand staat in jullie teammap Klanten.',
-      enter() { zoomTo(finderS); moveCursor(fileS); later(() => { click(); fileS.classList.add('sel'); }, 900); } },
+    { cap: 'Ken je dit probleem?', sub: 'Jij weet precies waar het staat. Anna gaat zoeken, en opent versie 02.',
+      enter() { zoomTo(screenS, 1.05); problem.classList.add('show'); } },
+    { cap: 'Dit is verleden tijd met Sharelink - Finder voor Mac!', sub: 'Werkt voor Fileserver, Google Drive, Dropbox en Synology Drive. OneDrive bewust niet.',
+      enter() { zoomReset(); problem.classList.remove('show'); promise.classList.add('show'); } },
+    { cap: 'Selecteer in Finder het bestand dat je wilt delen.', sub: 'Versie 03, in jullie teammap Projecten.',
+      enter() { promise.classList.remove('show'); zoomTo(finderS); moveCursor(fileS); later(() => { click(); fileS.classList.add('sel'); }, 900); } },
     { cap: 'Klik op het Sharelink-icoon in de menubalk en kies “Link map”.', sub: 'Een maplink zet het bestand bij de ontvanger klaar in Finder. Het icoon ervoor zegt waar het staat: Dropbox.',
-      enter() { zoomTo(tray, 3.2); moveCursor(slIcon); later(() => { click(); menu.classList.add('open'); }, 900); later(() => moveCursor(menuBoth), 1300); later(() => { menuBoth.classList.add('hover'); }, 1900); } },
+      enter() { zoomTo(tray, 3.2); moveCursor(slIcon); later(() => { click(); menu.classList.add('open'); }, 900); later(() => moveCursor(menuMap), 1300); later(() => { menuMap.classList.add('hover'); }, 1900); } },
     { cap: 'Klaar: de link staat op je klembord.', sub: 'Er is nog niets verstuurd. Nergens heen.',
-      enter() { click(); later(() => { menu.classList.remove('open'); menuBoth.classList.remove('hover'); toast.classList.add('show'); }, 250); later(() => toast.classList.remove('show'), 2400); } },
-    { cap: 'Plak de link in een mail of bericht aan Anna en verstuur.', sub: 'Een gewone https-link, dus klikbaar in Mail, Outlook, Teams en WhatsApp.',
+      enter() { click(); later(() => { menu.classList.remove('open'); menuMap.classList.remove('hover'); toast.classList.add('show'); }, 250); later(() => toast.classList.remove('show'), 2400); } },
+    { cap: 'Plak de link in je mail aan Anna en verstuur.', sub: 'Een gewone https-link, dus klikbaar in Mail, Outlook, Teams en WhatsApp.',
       enter() { zoomReset(); compose.classList.add('show'); later(() => compose.classList.add('sent'), 1700); later(() => mailR.classList.add('show'), 2400); } },
     { cap: 'Anna klikt op de link.', sub: '',
       enter() { zoomTo(screenR, 1.05); compose.classList.remove('show', 'sent'); mailR.classList.add('show'); moveCursor(mailLink); later(() => { click(); mailLink.classList.add('clicked'); }, 1000); } },
     { cap: 'Haar browser opent heel even… en sluit vanzelf weer.', sub: 'Het pad achter het hekje gaat nooit naar een server.', auto: 2600,
       enter() { cursor.classList.remove('on'); browser.classList.add('show'); later(() => browser.classList.remove('show'), 1700); } },
-    { cap: 'Finder springt naar de juiste map, in háár eigen Dropbox, met het bestand al geselecteerd.', sub: 'Bij jou staat de map in Studio Dropbox, bij haar onder CloudStorage. Zelfde teammap, andere plek op schijf.',
+    { cap: 'Finder springt naar de juiste map, in háár eigen Dropbox, met versie 03 al geselecteerd.', sub: 'Bij jou staat Dropbox in je homefolder, bij haar onder CloudStorage. Zelfde teammap, andere plek op schijf.',
       enter() { finderR.classList.add('show'); zoomTo(finderR); later(() => fileR.classList.add('sel'), 700); } },
     { cap: 'Dat is alles. Geen upload, geen account, geen spoor.', sub: 'Nog een keer kijken?', last: true,
       enter() { zoomReset(); } },
