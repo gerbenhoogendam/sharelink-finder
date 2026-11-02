@@ -7,7 +7,11 @@ APP="build/$NAME.app"; BIN="$APP/Contents/MacOS/$NAME"
 rm -rf build; mkdir -p "$APP/Contents/MacOS"
 cp Info.plist "$APP/Contents/"
 mkdir -p "$APP/Contents/Resources"; cp Resources/* "$APP/Contents/Resources/"
-swiftc -O -parse-as-library -o "$BIN" CloudLinks.swift App.swift
+# Universeel en voor macOS 13 en hoger: zonder -target krijgt de binary de macOS-versie van deze Mac als minimum.
+swiftc -O -parse-as-library -target arm64-apple-macos13.0  -o "$BIN.arm64"  CloudLinks.swift App.swift
+swiftc -O -parse-as-library -target x86_64-apple-macos13.0 -o "$BIN.x86_64" CloudLinks.swift App.swift
+lipo -create "$BIN.arm64" "$BIN.x86_64" -output "$BIN"; rm "$BIN.arm64" "$BIN.x86_64"
+vtool -show-build "$BIN" | grep -q 'minos 13.0' || { echo "binary eist niet macOS 13.0"; exit 1; }
 codesign --force --sign - "$APP"
 root=$(plutil -extract business.root_path raw -o - ~/.dropbox/info.json 2>/dev/null || plutil -extract personal.path raw -o - ~/.dropbox/info.json 2>/dev/null || true)
 if [ -n "$root" ]; then
